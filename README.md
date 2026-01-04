@@ -36,14 +36,77 @@ net.start()
 
 ### 建立衛星節點
 ```
+# Dictionary to hold the Mininet hosts
+hosts = {}
+new_hosts = {}
+
+dummy_host = net.addHost('dummy11')
+
+# Create Mininet hosts for each satellite in the path
+for sat_name in path:
+    sat_name_ = naming_conversion_xeoverse_mininet(sat_name)
+    host = net.addHost(sat_name_)
+    hosts[sat_name_] = host
+
+# Create Mininet hosts for the neighbours of the satellites in the path
+for host_name in hosts:
+    neighbours = get_neighbour_satellites(
+        naming_conversion_mininet_xeoverse(host_name), satellites
+    )
+    for x_sats in neighbours:
+        sat_name_ = naming_conversion_xeoverse_mininet(x_sats)
+        if sat_name_ not in hosts and sat_name_ not in new_hosts:
+            host = net.addHost(sat_name_)
+            new_hosts[sat_name_] = host
+
+hosts.update(new_hosts)
+
 ```
 
 ### 建立鏈路
 ```
+for host_name in hosts:
+    linksPerSat = get_available_links_per_sat(
+        naming_conversion_mininet_xeoverse(host_name),
+        ip_assignments,
+        satellites
+    )
+
+    for tuples in linksPerSat:
+        if naming_conversion_xeoverse_mininet(tuples[0].split("-eth")[0]) in hosts and \
+           naming_conversion_xeoverse_mininet(tuples[2].split("-eth")[0]) in hosts:
+            create_link_between(
+                tuples[0], tuples[2], tuples[1], tuples[3],
+                net, satellites,
+                timestamp=datetime(2023, 11, 13, 10, 30, 0)
+            )
+
 ```
 
 ### 加入地面段
 ```
+config = read_config_(config_file)
+end1 = config['experiment']['end1']
+end2 = config['experiment']['end2']
+
+host_end1 = net.addHost(end1.replace(" ", ""))
+host_end2 = net.addHost(end2.replace(" ", ""))
+
+terminal1_ip = xEO_network.find_the_ip_of_interface(end1+"-eth0", ip_assignments)
+sat_intf, sat_ip = xEO_network.find_matching_network_interface(terminal1_ip, ip_assignments)
+value = ip_assignments.pop(sat_intf, None)
+
+net.addLink(
+    host_end1,
+    hosts[naming_conversion_xeoverse_mininet(sat_intf.split("-eth")[0])],
+    intfName1=end1+"-eth0",
+    intfName2=sat_intf.replace("STARLINK", "STL"),
+    cls=TCLink,
+    params1={'ip': terminal1_ip + '/30'},
+    params2={'ip': value + '/30'},
+    bw=130, delay='5ms'
+)
+host_end1.cmd(f"route add default gw {value}")
 ```
 
 ### 套用routing
@@ -51,8 +114,23 @@ net.start()
 ```
 
 ### mininet測量
+#### ping
 ```
+command = f"ping -c {config['experiment']['duration_seconds']} {terminal2_ip} >> results_..._.log"
+result = host_end1.cmd(command)
+print(result)
 ```
+#### iperf
+```
+command2 = f"iperf -s &"
+command1 = f"iperf -c {terminal2_ip} -C {config['experiment']['cc']} -i1 -t {config['experiment']['duration_seconds']} >> results_..._.log 2>&1 &"
+host_end2.cmd(command2)
+host_end1.cmd(command1)
+```
+
+
+
+
 ## Routing演算法
 
 Xeoverse採用 Dijkstra shortest path 演算法進行 routing 計算  
