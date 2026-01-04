@@ -4,7 +4,7 @@
 
 Xeoverse在main.py中呼叫 x_substrate/constellation_mininet.py 裡的setup_mininet_topology()函式,呼叫x_substrate/constellation_mininet.py
 
-```xEO_mininet.setup_mininet_topology(new_satellites, path, ip_assignment, routing_r)
+```
 xEO_mininet.setup_mininet_topology(new_satellites, path, ip_assignment, routing_r)
 # xEO_network.print_satellite_neighbors_and_ips(new_satellites)
 # print(xEO_network.distribute_ip_addresses(xTP["matrix"], xTP["satellites"], ip_subnet))
@@ -30,7 +30,7 @@ Xeoverse採用 Dijkstra shortest path 演算法進行 routing 計算
 在x_routing中有一個定義dijkstra的函式用來算shortest_path  
 *Dijkstra Algorithm 是用來找出 Graph 上兩個頂點之間的最短路徑。  
 
-```def dijkstra_shortest_path
+```
 def dijkstra_shortest_path(graph, start_idx, end_idx, criteria):
 #graph:用adjacency matrix建立的圖
 #start_idx end_idx 表示起終點
