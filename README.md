@@ -68,7 +68,7 @@ hosts.update(new_hosts)
 
 ### 建立鏈路
 ```
-#找 links 並呼叫 create_link_between
+#找 links 並呼叫 create_link_between(外層)
 for host_name in hosts:
     linksPerSat = get_available_links_per_sat(
         naming_conversion_mininet_xeoverse(host_name),
@@ -87,7 +87,7 @@ for host_name in hosts:
 
 
 
-#建立LINK
+#建立ISL(內層)
 link_latency = x_topo.calculate_satellites_latency_(sat1, sat2, timestamp)
 link_bw = x_topo.calculate_satellites_bw_(
     naming_conversion_mininet_xeoverse(host1_name),
@@ -107,6 +107,7 @@ net.addLink(
 
 ### 加入地面段
 ```
+#建立地面使用者 / gateway
 config = read_config_(config_file)
 end1 = config['experiment']['end1']
 end2 = config['experiment']['end2']
@@ -118,6 +119,7 @@ terminal1_ip = xEO_network.find_the_ip_of_interface(end1+"-eth0", ip_assignments
 sat_intf, sat_ip = xEO_network.find_matching_network_interface(terminal1_ip, ip_assignments)
 value = ip_assignments.pop(sat_intf, None)
 
+#把地面使用者和衛星接起來
 net.addLink(
     host_end1,
     hosts[naming_conversion_xeoverse_mininet(sat_intf.split("-eth")[0])],
