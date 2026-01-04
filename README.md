@@ -23,12 +23,3 @@ ip_assignment:告訴 Mininet 每個介面的 IP
 設定每個 Host 的介面 IP、讓 routing 指令有正確的下一跳
 routing_r:告訴 Mininet 要下哪些 routing 指令
 
-'''
-***
-new_satellites:告訴 Mininet要建哪些節點、每個節點幾個介面
-決定要建哪些 Host(可以發送或接收的端點)
-path:告訴 Mininet 封包要走哪條路
-設定 routing（只讓封包走這條 path）
-ip_assignment:告訴 Mininet 每個介面的 IP
-設定每個 Host 的介面 IP、讓 routing 指令有正確的下一跳
-routing_r:告訴 Mininet 要下哪些 routing 指令
