@@ -4,7 +4,7 @@
 <img width="1015" height="267" alt="image" src="https://github.com/user-attachments/assets/e99dbb67-6605-4e50-9d92-37e36c79aca8" />
 呼叫mininet流程圖
   
-Xeoverse在main.py中呼叫 x_substrate/constellation_mininet.py 裡的setup_mininet_topology()函式,呼叫x_substrate/constellation_mininet.py
+Xeoverse在main.py中呼叫 x_substrate/constellation_mininet.py 裡的setup_mininet_topology()函式
 
 ```
 xEO_mininet.setup_mininet_topology(new_satellites, path, ip_assignment, routing_r)
