@@ -20,6 +20,7 @@ routing_r:告訴 Mininet 要下哪些 routing 指令
 
 ## constellation_mininet
 ### 匯入mininet api
+用 Mininet 來模擬網路
 ```
 from mininet.net import Mininet
 from mininet.node import Controller, OVSSwitch
@@ -29,6 +30,8 @@ from mininet.log import setLogLevel
 ```
 
 ### 建立mininet物件
+net為空的虛擬網路
+net.start為開始啟動
 ```
 net = Mininet(controller=None, switch=OVSSwitch, link=TCLink)
 net.start()
