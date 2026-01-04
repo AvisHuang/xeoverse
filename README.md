@@ -1,6 +1,6 @@
 # xeoverse
 
-##Xeoverse呼叫Mininet
+## Xeoverse呼叫Mininet
 
 Xeoverse在main.py中呼叫 x_substrate/constellation_mininet.py 裡的setup_mininet_topology()函式,呼叫x_substrate/constellation_mininet.py
 
@@ -22,4 +22,59 @@ path:告訴 Mininet 封包要走哪條路
 ip_assignment:告訴 Mininet 每個介面的 IP  
 設定每個 Host 的介面 IP、讓 routing 指令有正確的下一跳  
 routing_r:告訴 Mininet 要下哪些 routing 指令  
+
+## Routing演算法
+
+Xeoverse採用 Dijkstra shortest path 演算法進行 routing 計算  
+在x_routing中有一個定義dijkstra的函式用來算shortest_path  
+*Dijkstra Algorithm 是用來找出 Graph 上兩個頂點之間的最短路徑。  
+
+```
+def dijkstra_shortest_path(graph, start_idx, end_idx, criteria):
+#graph:用adjacency matrix建立的圖
+#start_idx end_idx 表示起終點
+#criteria 表示成本計算方式(latency/throughput)
+#edge_info表示那一條連線的資訊(latency,throughput)
+    #初始化部分
+    priority_queue = [(0, start_idx)]
+    #預設距離設為 ∞
+    distances = {node: float('infinity') for node in graph}
+    distances[start_idx] = 0
+    previous_nodes = {node: None for node in graph}
+		
+		#有尚未處理的點就繼續
+    while priority_queue:
+        #每次選目前離起點最近的點
+        current_distance, current_node = heapq.heappop(priority_queue)
+        #是否到達終點
+        if current_node == end_idx:
+            break
+
+        # Error handling for missing nodes
+        if current_node not in graph:
+            raise ValueError(f"Node {current_node} not found in graph")
+
+        #探索現在連街的鄰居 + 計算成本
+        for neighbor, edge_info in graph[current_node].items():
+            latency, throughput = edge_info
+            distance = calculate_distance(current_distance, latency, throughput, criteria)
+
+            #更新最短路徑
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                previous_nodes[neighbor] = current_node
+                heapq.heappush(priority_queue, (distance, neighbor))
+
+    path = []
+    current = end_idx
+	 
+	  #回推 path
+	  while current is not None:
+        path.append(current)
+        current = previous_nodes[current]
+    path.reverse()
+   #previous_nodes是因為終點往回數，所以要再reverse就會變成從起點開始的path
+    return path if path[0] == start_idx else []
+
+```
 
