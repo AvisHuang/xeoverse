@@ -78,4 +78,21 @@ def dijkstra_shortest_path(graph, start_idx, end_idx, criteria):
     return path if path[0] == start_idx else []
 
 ```
+-dijkstra函示之流程圖
+<img width="1411" height="301" alt="image" src="https://github.com/user-attachments/assets/0cc91143-f470-4e60-a7cb-457b8d95dab9" />  
+
+*Priority Queue（優先佇列）是一種資料結構，雖然是佇列但**每次取出的不是最早放進去的，而是優先度最高的**
+
+e.g.Dijkstra示範圖
+<img width="1260" height="914" alt="image" src="https://github.com/user-attachments/assets/dfff39a1-d2b5-4254-993d-fa2f810b2daa" />
+step0.先設距離表 A:0 BCD=infinite  
+step1.以最小距離的點去更新鄰居點(A距離為0,B距離為4 距離C為2 距離D為1)  
+step2.找出距離最短的(D點 距離1)  
+step3.以D當更新鄰居的點  
+step4.用D更新鄰居：  
+A~D~B=1+5=6(但這樣比原本的4大 所以不更新)  
+A~D~C=1+3=4(但這樣比原本的2大 所以不更新)  
+step5.以C當更新鄰居的點：  
+A~C~D=2+3=5(但這樣比原本的1大 所以不更新)  
+即可算出最短距離  
 
