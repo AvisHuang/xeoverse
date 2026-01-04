@@ -65,6 +65,7 @@ hosts.update(new_hosts)
 
 ### 建立鏈路
 ```
+#找 links 並呼叫 create_link_between
 for host_name in hosts:
     linksPerSat = get_available_links_per_sat(
         naming_conversion_mininet_xeoverse(host_name),
@@ -80,6 +81,24 @@ for host_name in hosts:
                 net, satellites,
                 timestamp=datetime(2023, 11, 13, 10, 30, 0)
             )
+
+
+
+#建立LINK
+link_latency = x_topo.calculate_satellites_latency_(sat1, sat2, timestamp)
+link_bw = x_topo.calculate_satellites_bw_(
+    naming_conversion_mininet_xeoverse(host1_name),
+    naming_conversion_mininet_xeoverse(host2_name),
+    timestamp
+)
+
+net.addLink(
+    host1, host2,
+    intfName1=intf1_name, intfName2=intf2_name,
+    cls=TCLink,
+    params1={'ip': ip1 + '/30'}, params2={'ip': ip2 + '/30'},
+    bw=link_bw, delay=(str(link_latency) + 'ms')
+)
 
 ```
 
@@ -111,6 +130,14 @@ host_end1.cmd(f"route add default gw {value}")
 
 ### 套用routing
 ```
+net = apply_routing_commands_in_mininet(net, routing_dict)
+for satellite, commands in routing_dict.items():
+    m_satellite = naming_conversion_xeoverse_mininet(satellite)
+    node = net.getNodeByName(m_satellite)
+    if node:
+        for cmd in commands:
+            node.cmd(cmd)
+
 ```
 
 ### mininet測量
