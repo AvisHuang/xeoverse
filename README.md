@@ -15,7 +15,6 @@ Xeoverse在main.py中呼叫 x_substrate/constellation_mininet.py 裡的setup_min
 # interfaces_info = xEO_network.get_satellite_interfaces(satellite_name, xTP["mx"], xTP["name2index"], link_assignments, interface_counts)
 # print(interfaces_info)
 ```
-***
 new_satellites:告訴 Mininet要建哪些節點、每個節點幾個介面
 決定要建哪些 Host(可以發送或接收的端點)
 path:告訴 Mininet 封包要走哪條路
