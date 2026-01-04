@@ -4,8 +4,7 @@
 
 Xeoverse在main.py中呼叫 x_substrate/constellation_mininet.py 裡的setup_mininet_topology()函式,呼叫x_substrate/constellation_mininet.py
 
-'''
-xEO_mininet.setup_mininet_topology(new_satellites, path, ip_assignment, routing_r)
+```xEO_mininet.setup_mininet_topology(new_satellites, path, ip_assignment, routing_r)
 # xEO_network.print_satellite_neighbors_and_ips(new_satellites)
 # print(xEO_network.distribute_ip_addresses(xTP["matrix"], xTP["satellites"], ip_subnet))
 # (adjacency_matrix, terminals, start_terminal, end_terminal, satellites, timestamp):
@@ -15,7 +14,7 @@ xEO_mininet.setup_mininet_topology(new_satellites, path, ip_assignment, routing_
 
 # interfaces_info = xEO_network.get_satellite_interfaces(satellite_name, xTP["mx"], xTP["name2index"], link_assignments, interface_counts)
 # print(interfaces_info)
-
+```
 ***
 new_satellites:告訴 Mininet要建哪些節點、每個節點幾個介面
 決定要建哪些 Host(可以發送或接收的端點)
