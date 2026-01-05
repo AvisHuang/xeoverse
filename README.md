@@ -2,6 +2,21 @@
 
 <img width="897" height="224" alt="image" src="https://github.com/user-attachments/assets/b9b80bc9-da6e-4919-8096-4c40ef2de90e" />
 
+## Xeoverse做完模擬產生的OUTPUT
+
+Xeoverse 在模擬過程中，於 routing 計算相關流程中輸出多項中間與最終結果，包含 connectivity_matrices、routing_configs、constellation_ip_addresses 與 path.json 等檔案，作為後續 Mininet 網路模擬之輸入與設定依據
+
+### 1.1 connectivity_matrices  
+connectivity_matrices描述各時間點衛星之間是否存在可用連線，用以表示當下的網路拓樸狀態   ，並作為後續 routing 計算之基礎輸入資料
+<img width="960" height="777" alt="image" src="https://github.com/user-attachments/assets/6c09b286-eb2d-4939-8c83-e34ca1f4497a" />   
+Xeoverse 會於每一個模擬時間點輸出一份 adjacency matrix（鄰接矩陣），用以表示該時間點衛星節點之間的連線關係。以 adjacency_matrix_20231113_103000.json 為例，該檔案描述 2023/11/13 10:30:00 時刻之衛星連線狀態。
+
+### 1.2 routing_configs
+
+routing_configs 為 Xeoverse routing 計算後之最終輸出，用以將抽象路徑結果轉換為可實際套用之系統設定。
+
+*每一秒皆有相對應的routing_configs產生
+
 
 ## Xeoverse呼叫Mininet
 <img width="1015" height="267" alt="image" src="https://github.com/user-attachments/assets/e99dbb67-6605-4e50-9d92-37e36c79aca8" />
