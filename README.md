@@ -223,7 +223,7 @@ def dijkstra_shortest_path(graph, start_idx, end_idx, criteria):
 *Priority Queue（優先佇列）是一種資料結構，雖然是佇列但**每次取出的不是最早放進去的，而是優先度最高的**
 
 e.g.Dijkstra示範圖
-<img width="1260" height="914" alt="image" src="https://github.com/user-attachments/assets/dfff39a1-d2b5-4254-993d-fa2f810b2daa" />
+<img width="561" height="273" alt="image" src="https://github.com/user-attachments/assets/b0816ea4-212e-4cf6-979a-406d60bc5159" />
 step0.先設距離表 A:0 BCD=infinite  
 step1.以最小距離的點去更新鄰居點(A距離為0,B距離為4 距離C為2 距離D為1)  
 step2.找出距離最短的(D點 距離1)  
