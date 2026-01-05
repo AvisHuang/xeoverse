@@ -26,7 +26,7 @@ routing_configs 為 Xeoverse routing 計算後之最終輸出，用以將抽象�
 <img width="962" height="481" alt="image" src="https://github.com/user-attachments/assets/843aa072-9dcb-4522-b940-f67e6c7ff879" />  
 以ip route add 192.168.26.84/30 via 192.168.30.53 dev STL-1791-eth2做說明，封包的目的地是 192.168.26.84/30，STARLINK-1791會將應該把封包交給192.168.30.53下一跳，並從 STL-1791-eth2 這個介面送出去
 *下一跳表示「下一步先丟給誰」
-<img width="962" height="293" alt="image" src="https://github.com/user-attachments/assets/8de6ba21-11b3-4b4f-8ea4-3cb8c08abaa3" />
+
 
 ### 1.3 constellation_ip_addresses  
 constellation_ip_addresses是在記錄各時間點衛星節點所使用之 IP 位址與介面配置，作為抽象拓樸與實際網路模擬之對應。  
