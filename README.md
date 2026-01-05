@@ -13,9 +13,13 @@ Xeoverse 會於每一個模擬時間點輸出一份 adjacency matrix（鄰接矩
 
 ### 1.2 routing_configs
 
-routing_configs 為 Xeoverse routing 計算後之最終輸出，用以將抽象路徑結果轉換為可實際套用之系統設定。
+routing_configs 為 Xeoverse routing 計算後之最終輸出，用以將抽象路徑結果轉換為可實際套用之系統設定。  
+*每一秒皆有相對應的routing_configs產生  
+*以20231113_103000時刻的routing_configs做解釋
+<img width="956" height="191" alt="image" src="https://github.com/user-attachments/assets/4bc35384-244a-4be7-b51b-d736b208202d" />  
+在`20231113_103000`的結果中有許多顆衛星(e.g. STARLINK-1054…)，每一顆衛星節點，都有一份獨立的 routing 設定檔
 
-*每一秒皆有相對應的routing_configs產生
+*`.sh` 檔格式是用以將 routing 計算結果轉換為可直接在系統中執行之腳本形式
 
 
 ## Xeoverse呼叫Mininet
