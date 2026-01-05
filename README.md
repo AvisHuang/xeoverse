@@ -30,10 +30,12 @@ routing_configs 為 Xeoverse routing 計算後之最終輸出，用以將抽象�
 
 ### 1.3 constellation_ip_addresses  
 constellation_ip_addresses是在記錄各時間點衛星節點所使用之 IP 位址與介面配置，作為抽象拓樸與實際網路模擬之對應。  
-<img width="669" height="918" alt="image" src="https://github.com/user-attachments/assets/073d68bb-f63d-4f25-aac6-c966c280bf94" />  
+<img width="962" height="293" alt="image" src="https://github.com/user-attachments/assets/a93e050d-5fb8-4130-b95c-5408ed6cf441" />
+ 
 Xeoverse 於模擬過程中，依模擬時間點逐秒輸出各衛星節點之 IP 位址設定檔（constellation_ip_addresses），以反映低軌衛星網路之動態特性。  
 舉其中constellation_ip_addresses_20231113_103000.json，其內容為以下(因為太多並未全部列出)
-<img width="930" height="290" alt="image" src="https://github.com/user-attachments/assets/a38063ab-956b-4362-bb6d-27d1dd3d7484" />
+<img width="669" height="918" alt="image" src="https://github.com/user-attachments/assets/e329b278-d2a5-441a-94ef-604e36c1b867" />
+
 會出現很多衛星的連線，以`STARLINK-30816-eth2": "192.168.41.133"`做解釋
 `STARLINK-30816`表示衛星節點ID，eth2表示該衛星上的第 2 個網路介面，`192.168.41.133`表示此介面實際使用的 IP 位址
 然後最下面的London、SanFranci表示地面端點的網路介面 IP  
@@ -41,14 +43,16 @@ Xeoverse 於模擬過程中，依模擬時間點逐秒輸出各衛星節點之 I
 
 ### 1.4 path.json
 path.json 記錄於特定模擬時間點下，資料自來源端至目的端所經過之衛星節點序列；隨著衛星拓樸與可用連線之變化，不同時間點可能對應不同之路徑結果。  
-<img width="959" height="455" alt="image" src="https://github.com/user-attachments/assets/7c03fa98-a8a8-46d2-9822-3e9e4946f935" />
+<img width="930" height="290" alt="image" src="https://github.com/user-attachments/assets/f555529d-c57d-4655-a9c7-1d73100092b2" />
+
 path 會隨模擬時間點變化，於不同時間點可能產生不同之路徑結果
-![Uploading image.png…]()
+<img width="959" height="455" alt="image" src="https://github.com/user-attachments/assets/a15cb714-4303-41ab-9e98-1b4b9e33830b" />
 STARLINK-****表示是由這些衛星節點 ID 組成
 
 
 ## Xeoverse呼叫Mininet
-<img width="1015" height="267" alt="image" src="https://github.com/user-attachments/assets/e99dbb67-6605-4e50-9d92-37e36c79aca8" />
+![Uploading image.png…]()
+
 呼叫mininet流程圖
   
 Xeoverse在main.py中呼叫 x_substrate/constellation_mininet.py 裡的setup_mininet_topology()函式
