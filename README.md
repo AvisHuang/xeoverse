@@ -224,6 +224,7 @@ def dijkstra_shortest_path(graph, start_idx, end_idx, criteria):
 
 e.g.Dijkstra示範圖
 <img width="561" height="273" alt="image" src="https://github.com/user-attachments/assets/b0816ea4-212e-4cf6-979a-406d60bc5159" />
+  
 step0.先設距離表 A:0 BCD=infinite  
 step1.以最小距離的點去更新鄰居點(A距離為0,B距離為4 距離C為2 距離D為1)  
 step2.找出距離最短的(D點 距離1)  
