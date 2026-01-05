@@ -15,6 +15,8 @@ Xeoverse 會於每一個模擬時間點輸出一份 adjacency matrix（鄰接矩
 
 routing_configs 為 Xeoverse routing 計算後之最終輸出，用以將抽象路徑結果轉換為可實際套用之系統設定。  
 *每一秒皆有相對應的routing_configs產生  
+<img width="467" height="872" alt="image" src="https://github.com/user-attachments/assets/bc120602-b0ef-47d4-9065-c4bb8376aafd" />
+
 *以20231113_103000時刻的routing_configs做解釋
 <img width="956" height="191" alt="image" src="https://github.com/user-attachments/assets/4bc35384-244a-4be7-b51b-d736b208202d" />  
 在`20231113_103000`的結果中有許多顆衛星(e.g. STARLINK-1054…)，每一顆衛星節點，都有一份獨立的 routing 設定檔
@@ -24,10 +26,25 @@ routing_configs 為 Xeoverse routing 計算後之最終輸出，用以將抽象�
 <img width="962" height="481" alt="image" src="https://github.com/user-attachments/assets/843aa072-9dcb-4522-b940-f67e6c7ff879" />  
 以ip route add 192.168.26.84/30 via 192.168.30.53 dev STL-1791-eth2做說明，封包的目的地是 192.168.26.84/30，STARLINK-1791會將應該把封包交給192.168.30.53下一跳，並從 STL-1791-eth2 這個介面送出去
 *下一跳表示「下一步先丟給誰」
-![Uploading image.png…]()
+<img width="962" height="293" alt="image" src="https://github.com/user-attachments/assets/8de6ba21-11b3-4b4f-8ea4-3cb8c08abaa3" />
 
 ### 1.3 constellation_ip_addresses  
 constellation_ip_addresses是在記錄各時間點衛星節點所使用之 IP 位址與介面配置，作為抽象拓樸與實際網路模擬之對應。  
+<img width="669" height="918" alt="image" src="https://github.com/user-attachments/assets/073d68bb-f63d-4f25-aac6-c966c280bf94" />  
+Xeoverse 於模擬過程中，依模擬時間點逐秒輸出各衛星節點之 IP 位址設定檔（constellation_ip_addresses），以反映低軌衛星網路之動態特性。  
+舉其中constellation_ip_addresses_20231113_103000.json，其內容為以下(因為太多並未全部列出)
+<img width="930" height="290" alt="image" src="https://github.com/user-attachments/assets/a38063ab-956b-4362-bb6d-27d1dd3d7484" />
+會出現很多衛星的連線，以`STARLINK-30816-eth2": "192.168.41.133"`做解釋
+`STARLINK-30816`表示衛星節點ID，eth2表示該衛星上的第 2 個網路介面，`192.168.41.133`表示此介面實際使用的 IP 位址
+然後最下面的London、SanFranci表示地面端點的網路介面 IP  
+
+
+### 1.4 path.json
+path.json 記錄於特定模擬時間點下，資料自來源端至目的端所經過之衛星節點序列；隨著衛星拓樸與可用連線之變化，不同時間點可能對應不同之路徑結果。  
+<img width="959" height="455" alt="image" src="https://github.com/user-attachments/assets/7c03fa98-a8a8-46d2-9822-3e9e4946f935" />
+path 會隨模擬時間點變化，於不同時間點可能產生不同之路徑結果
+![Uploading image.png…]()
+STARLINK-****表示是由這些衛星節點 ID 組成
 
 
 ## Xeoverse呼叫Mininet
