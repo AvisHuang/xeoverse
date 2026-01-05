@@ -14,6 +14,7 @@ Xeoverse 會於每一個模擬時間點輸出一份 adjacency matrix（鄰接矩
 <img width="964" height="1008" alt="image" src="https://github.com/user-attachments/assets/451f63da-1c0b-4020-82d7-49729f9739c1" />
 adjencency matrix內容
 這只是衛星index,如果要知道衛星名子要去constellation_ip_addresses_20231113_103000.json對照
+
 ### 1.2 routing_configs
 
 routing_configs 為 Xeoverse routing 計算後之最終輸出，用以將抽象路徑結果轉換為可實際套用之系統設定。  
