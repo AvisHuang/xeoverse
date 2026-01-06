@@ -97,8 +97,11 @@ net.start()
 # Dictionary to hold the Mininet hosts
 hosts = {}
 new_hosts = {}
+（ host存Mininet 裡的所有衛星節點
+  new_hosts暫存「後來補上的鄰居衛星」）
 
 dummy_host = net.addHost('dummy11')
+（建一個暫時的節點 當eth2,3還沒用到時 先接到dummy 因為mininet不能跳號）
 
 # Create Mininet hosts for each satellite in the path
 for sat_name in path:
