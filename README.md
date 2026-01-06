@@ -291,3 +291,6 @@ step5.以C當更新鄰居的點：
 A~C~D=2+3=5(但這樣比原本的1大 所以不更新)  
 即可算出最短距離  
 
+## 每一個模擬時間點多長？
+<img width="943" height="206" alt="image" src="https://github.com/user-attachments/assets/7c34c685-41c7-4a18-b787-7ff722410e06" />
+
