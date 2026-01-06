@@ -105,21 +105,31 @@ dummy_host = net.addHost('dummy11')
 
 # Create Mininet hosts for each satellite in the path
 for sat_name in path:
+	#轉換名字
     sat_name_ = naming_conversion_xeoverse_mininet(sat_name)
-    host = net.addHost(sat_name_)
+	#加了一台虛擬主機
+	host = net.addHost(sat_name_)
+	把這顆衛星存到host[sat_name]裡
     hosts[sat_name_] = host
 
 # Create Mininet hosts for the neighbours of the satellites in the path
+#把剩餘衛星建起來(上面只有建shortes path),會重複去查最短路徑的微星鄰居
 for host_name in hosts:
+	#依據拓樸結果找出相對應的鄰居
     neighbours = get_neighbour_satellites(
+		#再把mininet的名字轉xeo的名字才能去satellite查詢
         naming_conversion_mininet_xeoverse(host_name), satellites
     )
+	#補齊path上衛星的鄰居
     for x_sats in neighbours:
+		#轉名字
         sat_name_ = naming_conversion_xeoverse_mininet(x_sats)
+		#判斷是否為沒被建的鄰居
         if sat_name_ not in hosts and sat_name_ not in new_hosts:
-            host = net.addHost(sat_name_)
+			#建一個新節點
+			host = net.addHost(sat_name_)
             new_hosts[sat_name_] = host
-
+#所有host=path_sat+neighbor_sat
 hosts.update(new_hosts)
 
 ```
