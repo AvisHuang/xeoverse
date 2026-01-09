@@ -241,6 +241,10 @@ command1 = f"iperf -c {terminal2_ip} -C {config['experiment']['cc']} -i1 -t {con
 host_end2.cmd(command2)
 host_end1.cmd(command1)
 ```
+| 參數 | 意義 |
+|------|------|
+| -s | server mode | 
+| -c | 背景執行 |
 
 
 
