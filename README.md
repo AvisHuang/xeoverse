@@ -1,9 +1,5 @@
 # Xeoverse
-| 參數 | 意義 | 範例 |
-|------|------|------|
-| duration_seconds | 模擬總時間 | 60 |
-| step_seconds | 拓樸更新間隔 | 1 |
-| routing_metric | Routing 依據 | latency |
+
 <img width="897" height="224" alt="image" src="https://github.com/user-attachments/assets/b9b80bc9-da6e-4919-8096-4c40ef2de90e" />
 
 ## Xeoverse做完模擬產生的OUTPUT
@@ -224,8 +220,12 @@ command = f"ping -c {config['experiment']['duration_seconds']} {terminal2_ip} >>
 result = host_end1.cmd(command)
 print(result)
 ```
-| ping | -c |  terminal2_ip | >> results_..._.log |
-| 要做的事情 | 次數 | 對terminal2 | 回傳result |
+
+| 指令 | 參數 | 目標 | 輸出 |
+|------|------|------|------|
+| ping | -c | terminal2_ip | >> results_..._.log |
+| 要做的事情 | 次數 | 對 terminal2 | 回傳 result |
+
 
 host_end1去使用command指令測量
 
