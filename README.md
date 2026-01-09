@@ -1,5 +1,9 @@
 # Xeoverse
-
+| 參數 | 意義 | 範例 |
+|------|------|------|
+| duration_seconds | 模擬總時間 | 60 |
+| step_seconds | 拓樸更新間隔 | 1 |
+| routing_metric | Routing 依據 | latency |
 <img width="897" height="224" alt="image" src="https://github.com/user-attachments/assets/b9b80bc9-da6e-4919-8096-4c40ef2de90e" />
 
 ## Xeoverse做完模擬產生的OUTPUT
