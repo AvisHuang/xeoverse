@@ -250,12 +250,14 @@ host_end1.cmd(command1)
 |------|------|
 | -c | client mode | 
 | terminal2_ip | 目標端 IP |
-| -C | congestion control | 
+| -C | congestion control (可以決定傳的快慢 多寡)| 
 | -i 1 | 一秒輸出一次統計結果 |
 | -t {duration_seconds} | 實驗的時間 |
 | >> results_..._.log 2>&1 | 寫入實驗檔(不覆蓋) |
 | & | 背景執行 |
 
+*client:主動連線送信號
+*server:等別人連線接收信號
 
 ## Routing演算法
 
