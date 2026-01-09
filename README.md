@@ -244,9 +244,17 @@ host_end1.cmd(command1)
 | 參數 | 意義 |
 |------|------|
 | -s | server mode | 
-| -c | 背景執行 |
+| & | 背景執行 |
 
-
+| 參數 | 意義 |
+|------|------|
+| -c | client mode | 
+| terminal2_ip | 目標端 IP |
+| -C | congestion control | 
+| -i 1 | 一秒輸出一次統計結果 |
+| -t {duration_seconds} | 實驗的時間 |
+| >> results_..._.log 2>&1 | 寫入實驗檔(不覆蓋) |
+| & | 背景執行 |
 
 
 ## Routing演算法
