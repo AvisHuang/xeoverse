@@ -220,8 +220,8 @@ command = f"ping -c {config['experiment']['duration_seconds']} {terminal2_ip} >>
 result = host_end1.cmd(command)
 print(result)
 ```
-|ping| -c | terminal2_ip | >> results_..._.log |
-|要做的事情|次數|對terminal2|回傳result|
+| ping | -c |  terminal2_ip | >> results_..._.log |
+| 要做的事情 | 次數 | 對terminal2 | 回傳result |
 
 host_end1去使用command指令測量
 
