@@ -338,6 +338,17 @@ GW–SAT 鏈路是否建立，取決於get_available_links_per_sat()所產生的
 
 ###  create_link_between()
 
-判斷條件一> parts = intf.split('-')
-        if len(parts) != 3:
-            raise ValueError(f"Invalid interface format: {intf}")
+判斷條件一.介面格式正確與否(starlink-xxx-eth0)
+'''
+parts = intf.split('-') 
+if len(parts) != 3:
+raise ValueError(f"Invalid interface format: {intf}")
+'''
+
+判斷條件二.如果舊介面不存在，就先用 dummy link 補齊
+'''
+if not any(prev_intf_name == intf.name for intf in interfaces):
+net.addLink(host, dummy_h, intfName1=prev_intf_name, ...)
+'''
+
+
