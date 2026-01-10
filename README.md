@@ -362,7 +362,7 @@ end2 = config['experiment']['end2']
 ```
 host_end1 = net.addHost(end1.replace(" ", ""))
 host_end2 = net.addHost(end2.replace(" ", ""))
-
+#把原始名稱對到mininet host物件中
 ground_segments[end1] = host_end1
 ground_segments[end2] = host_end2
 ```
@@ -370,6 +370,7 @@ ground_segments[end2] = host_end2
 ### 找出 end1 / end2 的 eth0 IP
 ```
 terminal1_ip = xEO_network.find_the_ip_of_interface(
+#用end1-eth0去ip_assignment查出對應的ip
     end1 + "-eth0",
     ip_assignments
 )
@@ -382,13 +383,15 @@ terminal2_ip = xEO_network.find_the_ip_of_interface(
 ### 用 GW 的 IP 找到對應衛星介面
 ```
 sat_intf, sat_ip = xEO_network.find_matching_network_interface(
-    terminal1_ip,
+#用 terminal1_ip去反查 ip_assignments，找出另一端衛星介面
+	terminal1_ip,
     ip_assignments
 )
 ```
 
 ### 取出衛星端 IP
 ```
+#從 ip_assignments 裡把 sat_intf 對應的 IP 拿出來
 value = ip_assignments.pop(sat_intf, None)
 ```
 
