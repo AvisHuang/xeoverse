@@ -334,5 +334,7 @@ A~C~D=2+3=5(但這樣比原本的1大 所以不更新)
 
 ## GW-SAT建立link
 
+<img width="1172" height="441" alt="image" src="https://github.com/user-attachments/assets/058cda52-1c82-4b7f-9916-280553714da5" />
+
 
 
