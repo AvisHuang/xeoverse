@@ -334,3 +334,10 @@ A~C~D=2+3=5(但這樣比原本的1大 所以不更新)
 
 ## GW SAT建立link
 
+GW–SAT 鏈路是否建立，取決於get_available_links_per_sat()所產生的可用鏈路清單；當該清單中包含某一組 Gateway 與 Satellite，且兩端節點皆已存在於 Mininet 環境中時，系統才會呼叫 create_link_between()，並透過 net.addLink() 將該鏈路實體化
+
+###  create_link_between()
+
+判斷條件一> parts = intf.split('-')
+        if len(parts) != 3:
+            raise ValueError(f"Invalid interface format: {intf}")
