@@ -336,5 +336,73 @@ A~C~D=2+3=5(但這樣比原本的1大 所以不更新)
 
 <img width="1172" height="441" alt="image" src="https://github.com/user-attachments/assets/058cda52-1c82-4b7f-9916-280553714da5" />
 
+### 呼叫setup_mininet_topology
+```
+setup_mininet_topology(
+    satellites=satellites,
+    path=path,
+    ip_assignments=ip_assignments,
+    routing_dict=routing_dict,
+    config_file=config_file
+)
+```
 
+### 讀取設定檔 config
+```
+ground_segments = {}
+config = read_config_(config_file)```
+```
+### 取得 Gateway 名稱 end1 / end2
+```
+end1 = config['experiment']['end1']
+end2 = config['experiment']['end2']
+```
 
+### 在 Mininet 建立 Gateway Host
+```
+host_end1 = net.addHost(end1.replace(" ", ""))
+host_end2 = net.addHost(end2.replace(" ", ""))
+
+ground_segments[end1] = host_end1
+ground_segments[end2] = host_end2
+```
+
+### 找出 end1 / end2 的 eth0 IP
+```
+terminal1_ip = xEO_network.find_the_ip_of_interface(
+    end1 + "-eth0",
+    ip_assignments
+)
+terminal2_ip = xEO_network.find_the_ip_of_interface(
+    end2 + "-eth0",
+    ip_assignments
+)
+```
+
+### 用 GW 的 IP 找到對應衛星介面
+```
+sat_intf, sat_ip = xEO_network.find_matching_network_interface(
+    terminal1_ip,
+    ip_assignments
+)
+```
+
+### 取出衛星端 IP
+```
+value = ip_assignments.pop(sat_intf, None)
+```
+
+### 建立 end1 的 GW–SAT Link（GSL）
+```
+net.addLink(
+    host_end1,
+    hosts[naming_conversion_xeoverse_mininet(sat_intf.split("-eth")[0])],
+    intfName1=end1 + "-eth0",
+    intfName2=sat_intf.replace("STARLINK", "STL"),
+    cls=TCLink,
+    params1={'ip': terminal1_ip + '/30'},
+    params2={'ip': value + '/30'},
+    bw=130,
+    delay='5ms'
+)
+```
