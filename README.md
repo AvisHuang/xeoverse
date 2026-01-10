@@ -332,23 +332,7 @@ step5.以C當更新鄰居的點：
 A~C~D=2+3=5(但這樣比原本的1大 所以不更新)  
 即可算出最短距離  
 
-## GW SAT建立link
+## GW-SAT建立link
 
-GW–SAT 鏈路是否建立，取決於get_available_links_per_sat()所產生的可用鏈路清單；當該清單中包含某一組 Gateway 與 Satellite，且兩端節點皆已存在於 Mininet 環境中時，系統才會呼叫 create_link_between()，並透過 net.addLink() 將該鏈路實體化
-
-###  create_link_between()
-
-判斷條件一、介面格式正確與否(starlink-xxx-eth0)
-```
-parts = intf.split('-') 
-if len(parts) != 3:
-raise ValueError(f"Invalid interface format: {intf}")
-```
-
-判斷條件二、如果舊介面不存在，就先用 dummy link 補齊
-```
-if not any(prev_intf_name == intf.name for intf in interfaces):
-net.addLink(host, dummy_h, intfName1=prev_intf_name, ...)
-```
 
 
