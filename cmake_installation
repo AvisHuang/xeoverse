@@ -1,0 +1,37 @@
+# cmake-installation
+
+## 10/11
+daily logs：先安裝了windows power shell 用power shell再去裝ubutun
+(已完成)
+但在程式碼的地方有錯誤
+<img width="904" height="470" alt="image" src="https://github.com/user-attachments/assets/91d31f14-2292-4508-ba42-35b25ba5a3a4" />
+<img width="883" height="300" alt="image" src="https://github.com/user-attachments/assets/c9b29e55-e2ce-4543-ac86-1fbc5ad9bda8" />
+<img width="870" height="379" alt="image" src="https://github.com/user-attachments/assets/e7507061-4f07-4bbd-918b-d5eee4c5c30c" />
+
+中間有遇到 SNS3 的 ns3 腳本有偵測到系統還沒進行設定（configure），這是正常的第一次啟動情況。
+後來有用這個重新設定：./ns3 configure
+
+最後有編譯完成
+<img width="864" height="770" alt="image" src="https://github.com/user-attachments/assets/7f413729-eab8-4644-9e18-767fc1049e3e" />
+
+# 10/13
+今天有試跑了程式
+有有完成了example
+<img width="936" height="427" alt="image" src="https://github.com/user-attachments/assets/868e58c1-817d-4e4f-9c1a-4e00fcffd74b" />
+
+*一開始有2.28795秒的延遲
+
+*CBR (Constant Bit Rate) 應用程式代表固定速率傳送資料。
+
+*At time +8.30803s packet sink received 512 bytes from 10.1.0.2 port 49153 total Rx 512 bytes：回傳
+
+*延遲了0.30803sec
+
+*At time 9s cbr application sent 512 bytes to 90.2.0.2 port 9 total Tx 1024 bytes
+
+At time +9.30403s packet sink received 512 bytes from 10.1.0.2 port 49153 total Rx 1024 bytes：再次傳送一個封包，總傳送量累積為 1024 bytes。
+
+
+
+
+
