@@ -409,3 +409,21 @@ net.addLink(
     delay='5ms'
 )
 ```
+
+
+## Xeoverse資料傳給sns3
+XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）與 MAC 層（L2）的模擬
+| xeoverse資料 | 對應sns3部分 |
+|------|------|
+| connectivity_matrix | Channel / Propagation | 
+| path.json | Scenario / Example Layer |
+| routing_configs |MAC / PHY Stack |
+| constellation_ip_...json |ns-3 Network / Internet |
+
+
+
+
+
+### path.json
+### 
+### adjacency_matrix
