@@ -483,7 +483,8 @@ if __name__ == "__main__":
     safe_convert()
 ```
 
-
 *TLE（Two-Line Element）是一種「用兩行文字描述一顆衛星軌道」的標準格式檔案。
 只要有 TLE + 時間，就能用數學模型算出「任一時間點衛星在太空中的座標」。
 
+tle.txt、path.json給sns3做模擬
+<img width="1002" height="464" alt="image" src="https://github.com/user-attachments/assets/565fb86d-23ad-40f1-ba07-ce15a4711d4d" />
