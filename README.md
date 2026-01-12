@@ -425,63 +425,11 @@ XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）
 | routing_configs |MAC / PHY Stack | 參考 XEO 的路由決策，在 SNS3 中設定靜態路由或時槽排程基準。 | 
 | constellation_ip_...json |ns-3 Network / Internet | 雖然兩套系統位址管理不同，但可用來統一節點的 ID 映射關係。 | 
 
+xeoverse是用
 ```
-import json
-import os
-import csv
-import glob
 
-def safe_convert():
-    # 1. 只找資料夾，不刪除任何東西
-    folders = sorted(glob.glob('results_*'), reverse=True)
-    if not folders:
-        print("找不到 results 資料夾！請確認你已經跑過預處理。")
-        return
-    
-    src_folder = folders[0] # 抓取最新的結果
-    print(f"讀取來源資料夾：{src_folder}")
-
-    # 從資料夾名稱抓取時間戳記
-    parts = src_folder.split('_')
-    ts = f"{parts[1]}_{parts[2]}"
-
-    # 定義檔案路徑 (只讀不寫) [cite: 401]
-    path_json = os.path.join(src_folder, f"path_{ts}.json")
-    sat_json = os.path.join(src_folder, f"satellites_{ts}/satellites_{ts}.json")
-    
-    # 定義要產出的「新檔案」
-    output_file = "xeo_data_for_sns3.csv"
-
-    try:
-        # 以「唯讀模式 'r'」開啟，絕對不會弄壞原始資料
-        with open(path_json, 'r') as f:
-            path_list = json.load(f) # 取得跳轉路徑
-
-        with open(sat_json, 'r') as f:
-            all_sats = json.load(f) # 取得座標資料
-
-        # 寫入全新的 CSV 檔
-        with open(output_file, 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(['Order', 'Sat_ID', 'Lat', 'Lon', 'Alt']) # 標頭
-            
-            for i, name in enumerate(path_list):
-                if name in all_sats:
-                    coords = all_sats[name]['coordinates']
-                    writer.writerow([i, name, coords[0], coords[1], coords[2]])
-
-        print(f"--- 轉換成功 ---")
-        print(f"原始資料夾 '{src_folder}' 保持不變。")
-        print(f"已產出新檔案：{output_file}")
-
-    except Exception as err:
-        print(f"讀取時發生錯誤：{err}")
-
-if __name__ == "__main__":
-    safe_convert()
 ```
 
 *TLE（Two-Line Element）是一種「用兩行文字描述一顆衛星軌道」的標準格式檔案。
 只要有 TLE + 時間，就能用數學模型算出「任一時間點衛星在太空中的座標」。
 
-tle.txt、path.json給sns3做模擬
