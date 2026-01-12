@@ -413,6 +413,9 @@ net.addLink(
 
 ## Xeoverse資料傳給sns3
 
+<img width="1002" height="464" alt="image" src="https://github.com/user-attachments/assets/565fb86d-23ad-40f1-ba07-ce15a4711d4d" />
+
+
 XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）與 MAC 層（L2）的模擬
 | xeoverse資料 | 對應sns3部分 | 目的 |
 |------|------|------|
@@ -482,4 +485,3 @@ if __name__ == "__main__":
 只要有 TLE + 時間，就能用數學模型算出「任一時間點衛星在太空中的座標」。
 
 tle.txt、path.json給sns3做模擬
-<img width="1002" height="464" alt="image" src="https://github.com/user-attachments/assets/565fb86d-23ad-40f1-ba07-ce15a4711d4d" />
