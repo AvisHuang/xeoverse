@@ -403,7 +403,9 @@ value = ip_assignments.pop(sat_intf, None)
 ```
 net.addLink(
     host_end1,
+	#轉名字(xeoverse轉mininet)
     hosts[naming_conversion_xeoverse_mininet(sat_intf.split("-eth")[0])],
+
     intfName1=end1 + "-eth0",
     intfName2=sat_intf.replace("STARLINK", "STL"),
     cls=TCLink,
