@@ -409,6 +409,7 @@ net.addLink(
     intfName1=end1 + "-eth0",
     intfName2=sat_intf.replace("STARLINK", "STL"),
     cls=TCLink,
+#指定這條link使用TCLink類型
     params1={'ip': terminal1_ip + '/30'},
     params2={'ip': value + '/30'},
     bw=130,
