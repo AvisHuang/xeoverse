@@ -385,6 +385,7 @@ terminal2_ip = xEO_network.find_the_ip_of_interface(
 
 ### 用 GW 的 IP 找到對應衛星介面
 ```
+#sat_intf, sat_ip:衛星的介面名稱 IP
 sat_intf, sat_ip = xEO_network.find_matching_network_interface(
 #用 terminal1_ip去反查 ip_assignments，找出另一端衛星介面
 	terminal1_ip,
