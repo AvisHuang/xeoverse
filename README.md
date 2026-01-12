@@ -432,11 +432,6 @@ XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）
 | routing_configs |MAC / PHY Stack | 參考 XEO 的路由決策，在 SNS3 中設定靜態路由或時槽排程基準。 | 
 | constellation_ip_...json |ns-3 Network / Internet | 雖然兩套系統位址管理不同，但可用來統一節點的 ID 映射關係。 | 
 
-xeoverse是用
-```
-
-```
-
 *TLE（Two-Line Element）是一種「用兩行文字描述一顆衛星軌道」的標準格式檔案。
 只要有 TLE + 時間，就能用數學模型算出「任一時間點衛星在太空中的座標」。
 
