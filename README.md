@@ -257,7 +257,9 @@ host_end1.cmd(command1)
 | & | 背景執行 |
 
 *client:主動連線送信號
+
 *server:等別人連線接收信號
+
 *Congestion control 是 TCP 用來根據網路狀況動態調整傳輸速率的機制，在 iperf 實驗中透過 -C 指定不同演算法，可以觀察在高延遲的 NTN 環境下對吞吐量的影響。
 
 ## Routing演算法
