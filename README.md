@@ -437,6 +437,9 @@ XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）
 
 ## 轉換routing table給sns3
 
+
+https://github.com/AvisHuang/xeoverse/blob/main/sns3_dynamic_routing_60s.csv
+
 轉換程式
 ```
 import os
