@@ -435,3 +435,64 @@ XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）
 *TLE（Two-Line Element）是一種「用兩行文字描述一顆衛星軌道」的標準格式檔案。
 只要有 TLE + 時間，就能用數學模型算出「任一時間點衛星在太空中的座標」。
 
+## 轉換routing table給sns3
+
+轉換程式
+```
+import os
+import csv
+import glob
+import re
+
+def extract_dynamic_routing():
+    # 1. 直接鎖定你的結果主資料夾
+    main_dir = "results_20231113_103000"
+    if not os.path.exists(main_dir):
+        # 如果主資料夾名稱會變，改用自動搜尋
+        main_folders = sorted(glob.glob('results_*'))
+        if not main_folders:
+            print("找不到 results 資料夾")
+            return
+        main_dir = main_folders[-1]
+    
+    print(f"分析目標：{main_dir}")
+    output_file = "sns3_dynamic_routing_60s.csv"
+
+    # 2. 獲取所有秒數資料夾
+    # 這裡的路徑改為直接在 main_dir 下搜尋
+    config_dirs = sorted(glob.glob(os.path.join(main_dir, 'routing_configs_*')))
+    config_dirs = [d for d in config_dirs if os.path.isdir(d) and not d.endswith('_NOM')]
+
+    if not config_dirs:
+        print("錯誤：在資料夾內找不到 routing_configs 子資料夾")
+        return
+
+    print(f"找到 {len(config_dirs)} 秒的資料，開始寫入...")
+
+    with open(output_file, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Timestamp', 'Source_Sat', 'Destination_Network', 'Next_Hop_IP'])
+
+        for config_dir in config_dirs:
+            # 提取 6 位數時間戳記 (例如 103000)
+            timestamp = os.path.basename(config_dir).split('_')[-1]
+            
+            # 獲取該秒內所有 .sh
+            sh_files = glob.glob(os.path.join(config_dir, "*.sh"))
+            for sh_file in sh_files:
+                sat_name = os.path.basename(sh_file).replace(".sh", "")
+                
+                with open(sh_file, 'r') as f:
+                    for line in f:
+                        if "ip route add" in line and "via" in line:
+                            parts = line.split()
+                            # 欄位索引：ip(0) route(1) add(2) dest(3) via(4) next_hop(5)
+                            dest_net = parts[3]
+                            next_hop = parts[5]
+                            writer.writerow([timestamp, sat_name, dest_net, next_hop])
+
+    print(f"----------------------------------------")
+
+if __name__ == "__main__":
+    extract_dynamic_routing()
+```
