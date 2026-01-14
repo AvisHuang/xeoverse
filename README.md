@@ -441,7 +441,7 @@ https://github.com/AvisHuang/xeoverse/blob/main/sns3_dynamic_routing_60s.csv
 
 https://github.com/AvisHuang/xeoverse/blob/main/sns3_final_routing_with_source_ip.csv
 
-(有source_sat ip)
+(ver.2有source_sat ip)
 
 <img width="425" height="146" alt="image" src="https://github.com/user-attachments/assets/1503c0ee-7951-45ca-b24d-fb0a83213858" />
 
@@ -449,7 +449,7 @@ https://github.com/AvisHuang/xeoverse/blob/main/sns3_final_routing_with_source_i
 |------|------|------|------|
 | 時間戳記 | 來源衛星 (起點) | 目的網段 (終點) | 下一跳 IP (轉發對象) |
 
-因為routing_table的用途是知道下一跳的位置，所以xeoverse所產出的routing_table沒有把source_sat的ip寫出來，如果要找對應ip要去constellation裡找
+因為routing_table的用途是知道下一跳的位置，所以xeoverse所產出的routing_table沒有把source_sat的ip寫出來，如果要找對應ip要去constellation裡找，但在ver2.裡有把source_sat ip加上去
 
 <img width="614" height="798" alt="image" src="https://github.com/user-attachments/assets/89c44347-9066-4224-ae09-84d2be361245" />
 
