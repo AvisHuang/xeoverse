@@ -440,6 +440,8 @@ XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）
 
 https://github.com/AvisHuang/xeoverse/blob/main/sns3_dynamic_routing_60s.csv
 
+routing table中的source_ip
+
 <img width="425" height="146" alt="image" src="https://github.com/user-attachments/assets/1503c0ee-7951-45ca-b24d-fb0a83213858" />
 
 | Timestamp | Source_Sat | Destination_Network | Next_Hop_IP |
