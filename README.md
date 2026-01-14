@@ -449,6 +449,7 @@ routing table中的source_ip
 | 時間戳記 | 來源衛星 (起點) | 目的網段 (終點) | 下一跳 IP (轉發對象) |
 
 <img width="953" height="394" alt="image" src="https://github.com/user-attachments/assets/a35a6011-a4e6-4fe3-b68b-0def4c37a908" />
+
 ip route add <目的子網> via <下一跳IP> dev <出口介面>
 
 
