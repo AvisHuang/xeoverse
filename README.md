@@ -419,7 +419,6 @@ net.addLink(
 
 
 ## Xeoverse資料傳給sns3
-
 <img width="1002" height="464" alt="image" src="https://github.com/user-attachments/assets/565fb86d-23ad-40f1-ba07-ce15a4711d4d" />
 
 
@@ -439,6 +438,8 @@ XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）
 
 
 https://github.com/AvisHuang/xeoverse/blob/main/sns3_dynamic_routing_60s.csv
+
+https://github.com/AvisHuang/xeoverse/blob/main/sns3_final_routing_with_source_ip.csv
 
 <img width="425" height="146" alt="image" src="https://github.com/user-attachments/assets/1503c0ee-7951-45ca-b24d-fb0a83213858" />
 
