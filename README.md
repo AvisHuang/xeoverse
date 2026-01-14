@@ -440,16 +440,17 @@ XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）
 
 https://github.com/AvisHuang/xeoverse/blob/main/sns3_dynamic_routing_60s.csv
 
-因為routing_table的用途是知道下一跳的位置，所以xeoverse所產出的routing_table沒有把source_sat的ip寫出來，如果要找對應ip要去constellation裡找
-<img width="614" height="798" alt="image" src="https://github.com/user-attachments/assets/89c44347-9066-4224-ae09-84d2be361245" />
-
-
 <img width="425" height="146" alt="image" src="https://github.com/user-attachments/assets/1503c0ee-7951-45ca-b24d-fb0a83213858" />
 
 | Timestamp | Source_Sat | Destination_Network | Next_Hop_IP |
 |------|------|------|------|
 | 時間戳記 | 來源衛星 (起點) | 目的網段 (終點) | 下一跳 IP (轉發對象) |
 
+因為routing_table的用途是知道下一跳的位置，所以xeoverse所產出的routing_table沒有把source_sat的ip寫出來，如果要找對應ip要去constellation裡找
+
+<img width="614" height="798" alt="image" src="https://github.com/user-attachments/assets/89c44347-9066-4224-ae09-84d2be361245" />
+
+xeoverse所產生的routing table
 <img width="953" height="394" alt="image" src="https://github.com/user-attachments/assets/a35a6011-a4e6-4fe3-b68b-0def4c37a908" />
 
 ip route add <目的子網> via <下一跳IP> dev <出口介面>
