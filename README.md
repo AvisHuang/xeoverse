@@ -13,7 +13,10 @@
 
 
 
-
+## 一、Constellation Geometry (IV.A)
+會藉由所輸入的TLE和config.yaml來進行計算，算出每一顆衛星當下的位置及角度
+輸入：[TLE](https://github.com/AvisHuang/xeoverse/blob/main/tle.txt)[config.yaml](https://github.com/AvisHuang/xeoverse/blob/main/config.yaml)
+ 
 
 ## Xeoverse做完模擬產生的OUTPUT
 
