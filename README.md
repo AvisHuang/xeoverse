@@ -365,7 +365,7 @@ net.addLink(
 
 
 
-## Routing
+## 三、Routing
 
 在經過[Constellation Routing](constellation_routing.py)計算後所產生的ISL及GSL路由
 
@@ -382,7 +382,7 @@ net.addLink(
 
 3.生成指令：最後將運算結果轉化為 Linux 作業系統看得懂的 ip route 指令，並存成.sh檔案。
 
-### Dilkstra演算法
+### *Dilkstra演算法
 
 *Dijkstra Algorithm 是用來找出 Graph 上兩個頂點之間的最短路徑。  
 
