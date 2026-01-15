@@ -5,7 +5,7 @@
 
 
 ##  short-term target
-- [v] 完成輸出routing Table的csv檔
+- [x]完成輸出routing Table的csv檔
 - [ ] 完成上次報告的修正
 - [ ] 整理 xeoverse routing筆記
 - [ ] 整理sns3 建立衛星程式碼
