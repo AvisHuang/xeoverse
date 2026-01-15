@@ -363,16 +363,7 @@ net.addLink(
 ```
 
 
-## Xeoverse與sns3資料對比
 
-XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）與 MAC 層（L2）的模擬
-| xeoverse資料 | 對應sns3部分 | 目的 |
-|------|------|------|
-| connectivity_matrix | Channel / Propagation | 決定哪些衛星與地面站之間存在物理鏈路（L1/L2 通道建立） | 
-| satellites_...json (座標) | SatGeoHelper | 提供衛星動態經緯度與高度，用以計算都卜勒頻移與路徑損耗。 | 
-| path.json | Scenario / Example Layer | 在 SNS3 中手動配置特定的「跳轉序列」，模擬端對端（E2E）資料流。 | 
-| routing_configs |MAC / PHY Stack | 參考 XEO 的路由決策，在 SNS3 中設定靜態路由或時槽排程基準。 | 
-| constellation_ip_...json |ns-3 Network / Internet | 雖然兩套系統位址管理不同，但可用來統一節點的 ID 映射關係。 | 
 
 ## Routing
 
@@ -455,7 +446,16 @@ step5.以C當更新鄰居的點：
 A~C~D=2+3=5(但這樣比原本的1大 所以不更新)  
 即可算出最短距離  
 
+## Xeoverse與sns3資料對比
 
+XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）與 MAC 層（L2）的模擬
+| xeoverse資料 | 對應sns3部分 | 目的 |
+|------|------|------|
+| connectivity_matrix | Channel / Propagation | 決定哪些衛星與地面站之間存在物理鏈路（L1/L2 通道建立） | 
+| satellites_...json (座標) | SatGeoHelper | 提供衛星動態經緯度與高度，用以計算都卜勒頻移與路徑損耗。 | 
+| path.json | Scenario / Example Layer | 在 SNS3 中手動配置特定的「跳轉序列」，模擬端對端（E2E）資料流。 | 
+| routing_configs |MAC / PHY Stack | 參考 XEO 的路由決策，在 SNS3 中設定靜態路由或時槽排程基準。 | 
+| constellation_ip_...json |ns-3 Network / Internet | 雖然兩套系統位址管理不同，但可用來統一節點的 ID 映射關係。 | 
 
 ## 轉換routing table給sns3
 
