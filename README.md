@@ -73,8 +73,7 @@ Constellation link characteristics會藉由輸入connectivity matrix到[Constell
 輸入：Connectivity Matrix
 輸出：latency matrix和capacity matrix
 
-### 1.
-
+因為latency matrix和capacity matrix產生輸出後是直接交給routing做使用,所以沒有存成json檔
 
 ## 四、Constellation Routing(IV.D)
 
