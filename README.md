@@ -43,7 +43,10 @@ STARLINK-1007
 
 描述時間(simulation函式)、衛星怎麼互連(parameters函式)、無線通道假設(rf-parameters函式)、資料來源在哪、實驗要做什麼(experiment函式)
 
-## IV.B
+## Constellation_topology(IV.B)
+
+會藉由所輸入的satellite,ground segment來算出當下拓樸的連接狀態並輸出connectivity matrix
+
 
 
 ## Xeoverse做完模擬產生的OUTPUT
