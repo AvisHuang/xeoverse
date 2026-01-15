@@ -5,11 +5,11 @@
 
 
 ##  short-term target
-- [ ] 
-- [ ] 修正表格顯示問題
-- [ ] 增加 README 目錄
-- [ ] 整理 `sns3_dynamic_routing` 數據
-- [ ] 完成專案安裝說明
+- [v] 完成輸出routing Table的csv檔
+- [ ] 完成上次報告的修正
+- [ ] 整理 xeoverse routing筆記
+- [ ] 整理sns3 建立衛星程式碼
+
 
 
 
