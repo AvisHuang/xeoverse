@@ -55,9 +55,99 @@ Xeoverse 會於每一個模擬時間點輸出一份adjacency matrix（鄰接矩�
 
 <img width="564" height="1008" alt="image" src="https://github.com/user-attachments/assets/451f63da-1c0b-4020-82d7-49729f9739c1" />
 
-
-
 這只是衛星index,如果要知道衛星名子要去constellation_ip_addresses_20231113_103000.json對照
+
+## 三、Constellation link characteristics
+
+
+## 四、Constellation Routing(IV.D)
+
+在經過[Constellation Routing](constellation_routing.py)IV.D 計算後([用Dijkstra演算法](https://github.com/AvisHuang/xeoverse/blob/main/README.md#dilkstra%E6%BC%94%E7%AE%97%E6%B3%95))所產生的ISL及GSL路由
+
+在result會儲存每一秒衛星的路由表並轉呈ip route指令
+
+
+<img width="1052" height="700" alt="image" src="https://github.com/user-attachments/assets/ca15a244-5619-4d21-bc1a-4199e1336cf8" />
+
+每一顆衛星為一個router，
+內部就是每一顆衛星的routing table指令
+
+
+
+### *Dilkstra演算法
+
+*Dijkstra Algorithm 是用來找出 Graph 上兩個頂點之間的最短路徑。  
+
+```
+def dijkstra_shortest_path(graph, start_idx, end_idx, criteria):
+#graph:用adjacency matrix建立的圖
+#start_idx end_idx 表示起終點
+#criteria 表示成本計算方式(latency/throughput)
+#edge_info表示那一條連線的資訊(latency,throughput)
+    #初始化部分
+    priority_queue = [(0, start_idx)]
+    #預設距離設為 ∞
+    distances = {node: float('infinity') for node in graph}
+    distances[start_idx] = 0
+    previous_nodes = {node: None for node in graph}
+		
+		#有尚未處理的點就繼續
+    while priority_queue:
+        #每次選目前離起點最近的點
+        current_distance, current_node = heapq.heappop(priority_queue)
+        #是否到達終點
+        if current_node == end_idx:
+            break
+
+        # Error handling for missing nodes
+        if current_node not in graph:
+            raise ValueError(f"Node {current_node} not found in graph")
+
+        #探索現在連街的鄰居 + 計算成本
+        for neighbor, edge_info in graph[current_node].items():
+            latency, throughput = edge_info
+            distance = calculate_distance(current_distance, latency, throughput, criteria)
+
+            #更新最短路徑
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                previous_nodes[neighbor] = current_node
+                heapq.heappush(priority_queue, (distance, neighbor))
+
+    path = []
+    current = end_idx
+	 
+	  #回推 path
+	  while current is not None:
+        path.append(current)
+        current = previous_nodes[current]
+    path.reverse()
+   #previous_nodes是因為終點往回數，所以要再reverse就會變成從起點開始的path
+    return path if path[0] == start_idx else []
+
+```
+-dijkstra函示之流程圖
+<img width="1411" height="301" alt="image" src="https://github.com/user-attachments/assets/0cc91143-f470-4e60-a7cb-457b8d95dab9" />  
+
+*Priority Queue（優先佇列）是一種資料結構，雖然是佇列但**每次取出的不是最早放進去的，而是優先度最高的**
+
+e.g.Dijkstra示範圖
+<img width="561" height="273" alt="image" src="https://github.com/user-attachments/assets/b0816ea4-212e-4cf6-979a-406d60bc5159" />
+  
+step0.先設距離表 A:0 BCD=infinite  
+step1.以最小距離的點去更新鄰居點(A距離為0,B距離為4 距離C為2 距離D為1)  
+step2.找出距離最短的(D點 距離1)  
+step3.以D當更新鄰居的點  
+step4.用D更新鄰居：  
+A~D~B=1+5=6(但這樣比原本的4大 所以不更新)  
+A~D~C=1+3=4(但這樣比原本的2大 所以不更新)  
+step5.以C當更新鄰居的點：  
+A~C~D=2+3=5(但這樣比原本的1大 所以不更新)  
+即可算出最短距離  
+
+
+
+
 
 
 ## Xeoverse做完模擬產生的OUTPUT
@@ -69,7 +159,6 @@ Xeoverse 在模擬過程中，於 routing 計算相關流程中輸出多項中�
 connectivity_matrices描述各時間點衛星之間是否存在可用連線，用以表示當下的網路拓樸狀態   ，並作為後續 routing 計算之基礎輸入資料
 <img width="960" height="777" alt="image" src="https://github.com/user-attachments/assets/6c09b286-eb2d-4939-8c83-e34ca1f4497a" />   
 Xeoverse 會於每一個模擬時間點輸出一份 adjacency matrix（鄰接矩陣），用以表示該時間點衛星節點之間的連線關係。以 adjacency_matrix_20231113_103000.json 為例，該檔案描述 2023/11/13 10:30:00 時刻之衛星連線狀態。
-
 
 
 ### 1.2 routing_configs
@@ -409,90 +498,7 @@ net.addLink(
 
 
 
-## 三、Routing
 
-在經過[Constellation Routing](constellation_routing.py)IV.D 計算後([用Dijkstra演算法](https://github.com/AvisHuang/xeoverse/blob/main/README.md#dilkstra%E6%BC%94%E7%AE%97%E6%B3%95))所產生的ISL及GSL路由
-
-在result會儲存每一秒衛星的路由表並轉呈ip route指令
-
-
-<img width="1052" height="700" alt="image" src="https://github.com/user-attachments/assets/ca15a244-5619-4d21-bc1a-4199e1336cf8" />
-
-每一顆衛星為一個router，
-內部就是每一顆衛星的routing table指令
-
-
-
-### *Dilkstra演算法
-
-*Dijkstra Algorithm 是用來找出 Graph 上兩個頂點之間的最短路徑。  
-
-```
-def dijkstra_shortest_path(graph, start_idx, end_idx, criteria):
-#graph:用adjacency matrix建立的圖
-#start_idx end_idx 表示起終點
-#criteria 表示成本計算方式(latency/throughput)
-#edge_info表示那一條連線的資訊(latency,throughput)
-    #初始化部分
-    priority_queue = [(0, start_idx)]
-    #預設距離設為 ∞
-    distances = {node: float('infinity') for node in graph}
-    distances[start_idx] = 0
-    previous_nodes = {node: None for node in graph}
-		
-		#有尚未處理的點就繼續
-    while priority_queue:
-        #每次選目前離起點最近的點
-        current_distance, current_node = heapq.heappop(priority_queue)
-        #是否到達終點
-        if current_node == end_idx:
-            break
-
-        # Error handling for missing nodes
-        if current_node not in graph:
-            raise ValueError(f"Node {current_node} not found in graph")
-
-        #探索現在連街的鄰居 + 計算成本
-        for neighbor, edge_info in graph[current_node].items():
-            latency, throughput = edge_info
-            distance = calculate_distance(current_distance, latency, throughput, criteria)
-
-            #更新最短路徑
-            if distance < distances[neighbor]:
-                distances[neighbor] = distance
-                previous_nodes[neighbor] = current_node
-                heapq.heappush(priority_queue, (distance, neighbor))
-
-    path = []
-    current = end_idx
-	 
-	  #回推 path
-	  while current is not None:
-        path.append(current)
-        current = previous_nodes[current]
-    path.reverse()
-   #previous_nodes是因為終點往回數，所以要再reverse就會變成從起點開始的path
-    return path if path[0] == start_idx else []
-
-```
--dijkstra函示之流程圖
-<img width="1411" height="301" alt="image" src="https://github.com/user-attachments/assets/0cc91143-f470-4e60-a7cb-457b8d95dab9" />  
-
-*Priority Queue（優先佇列）是一種資料結構，雖然是佇列但**每次取出的不是最早放進去的，而是優先度最高的**
-
-e.g.Dijkstra示範圖
-<img width="561" height="273" alt="image" src="https://github.com/user-attachments/assets/b0816ea4-212e-4cf6-979a-406d60bc5159" />
-  
-step0.先設距離表 A:0 BCD=infinite  
-step1.以最小距離的點去更新鄰居點(A距離為0,B距離為4 距離C為2 距離D為1)  
-step2.找出距離最短的(D點 距離1)  
-step3.以D當更新鄰居的點  
-step4.用D更新鄰居：  
-A~D~B=1+5=6(但這樣比原本的4大 所以不更新)  
-A~D~C=1+3=4(但這樣比原本的2大 所以不更新)  
-step5.以C當更新鄰居的點：  
-A~C~D=2+3=5(但這樣比原本的1大 所以不更新)  
-即可算出最短距離  
 
 ## Xeoverse與sns3資料對比
 
