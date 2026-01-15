@@ -67,7 +67,7 @@ Xeoverse 會於每一個模擬時間點輸出一份adjacency matrix（鄰接矩�
 在result會儲存每一秒衛星的路由表並轉呈ip route指令
 
 
-<img width="1052" height="700" alt="image" src="https://github.com/user-attachments/assets/ca15a244-5619-4d21-bc1a-4199e1336cf8" />
+<img width="552" height="700" alt="image" src="https://github.com/user-attachments/assets/ca15a244-5619-4d21-bc1a-4199e1336cf8" />
 
 每一顆衛星為一個router，
 內部就是每一顆衛星的routing table指令
