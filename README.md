@@ -15,8 +15,26 @@
 
 ## 一、Constellation Geometry (IV.A)
 會藉由所輸入的TLE和config.yaml來進行計算，算出每一顆衛星當下的位置及角度
-輸入：[TLE](https://github.com/AvisHuang/xeoverse/blob/main/tle.txt)[config.yaml](https://github.com/AvisHuang/xeoverse/blob/main/config.yaml)
- 
+
+輸入：[TLE](https://github.com/AvisHuang/xeoverse/blob/main/tle.txt)、[config.yaml](https://github.com/AvisHuang/xeoverse/blob/main/config.yaml)
+### 1.TLE（Two-Line Element Set，雙行軌道要素）
+
+TLE用兩行文字描述一顆人造衛星在某一時間點的軌道狀態的標準格式，可搭配SGP4計算衛星在任意時間的空間位置與速度
+
+<img width="774" height="135" alt="image" src="https://github.com/user-attachments/assets/1999098a-1ad0-4d5a-a6c7-7236eb17088a" />
+
+| 44713 | U | 19074A | 23314.42416486 | 84661-3 |
+|------|------|------|------|------|
+| NORAD 衛星編號 | Classification | 發射年份 + 第幾次發射 + 分離物件代碼 | TLE 的參考時間點 | 空氣阻力參數 |
+| 用來確認兩行是同一顆衛星 | 軍事/民用分類用 |   | 2023年第314天 的小數時間 | 描述大氣阻力效應 |
+
+| 44713 | 53.0550 | 43.6089 | 0001326 | 15.06437851 |
+|------|------|------|------|------|
+| NORAD 衛星編號 | 軌道平面與地球赤道的夾角 | 軌道平面在地球周圍的方向角 | 偏心率 | 平均運動 | 
+| 用來確認兩行是同一顆衛星 | 決定衛星能飛到哪些緯度 | 影響衛星在地球上方的位置 | 軌道的橢圓程度 | 每天繞地球幾圈 |
+
+
+### 2.
 
 ## Xeoverse做完模擬產生的OUTPUT
 
