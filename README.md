@@ -75,6 +75,10 @@ Constellation link characteristics會藉由輸入connectivity matrix到[Constell
 
 因為latency matrix和capacity matrix產生輸出後是直接交給routing做使用,所以沒有存成json檔
 
+### 1.latency matrix
+是由輸入的adjacency matrix去看哪顆衛星有連接，接著去tle的到每顆衛星的實際位置，然後才去函示calculate_satellites_latency_算出延遲
+$$Latency = \frac{Distance \times 1000 (\text{米})}{3 \times 10^8 (\text{光速})} \times 1000 (\text{轉毫秒})$$
+### 2.capacity matrix
 ## 四、Constellation Routing(IV.D)
 
 在經過[Constellation Routing](constellation_routing.py)IV.D 計算後([用Dijkstra演算法](https://github.com/AvisHuang/xeoverse/blob/main/README.md#dilkstra%E6%BC%94%E7%AE%97%E6%B3%95))所產生的ISL及GSL路由
