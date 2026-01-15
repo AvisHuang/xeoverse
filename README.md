@@ -49,6 +49,12 @@ STARLINK-1007
 
 輸入：satellite,ground segment 輸出：[connectivity_matrix](https://github.com/AvisHuang/xeoverse/blob/main/adjacency_matrix_20231113_103000.json)
 
+### 鄰居判別
+
+前後上下鄰居：同軌道連線
+
+左右鄰居：跨軌道連線(隔壁條軌道)，會透過角度來判斷左右鄰居(左$0^\circ \sim 180^\circ$,右$180^\circ \sim 360^\circ$)
+
 ### 1.connectivity matrix
 
 Xeoverse 會於每一個模擬時間點輸出一份adjacency matrix（鄰接矩陣），其矩陣大小為N*N(N為衛星數量)，用以表示該時間點衛星節點之間的連線關係。以 adjacency_matrix_20231113_103000.json 為例，該檔案描述 2023/11/13 10:30:00 時刻之衛星連線狀態。
