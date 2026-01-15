@@ -61,7 +61,7 @@ Xeoverse 會於每一個模擬時間點輸出一份adjacency matrix（鄰接矩�
 
 <img width="564" height="1008" alt="image" src="https://github.com/user-attachments/assets/451f63da-1c0b-4020-82d7-49729f9739c1" />
 
-這只是衛星index,如果要知道衛星名子要去constellation_ip_addresses_20231113_103000.json對照
+這只是衛星index,如果要知道衛星名字要去constellation_ip_addresses_20231113_103000.json對照
 
 ## 三、Constellation link characteristics
 
