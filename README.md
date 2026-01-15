@@ -418,9 +418,7 @@ net.addLink(
 ```
 
 
-## Xeoverse資料傳給sns3
-<img width="1002" height="464" alt="image" src="https://github.com/user-attachments/assets/565fb86d-23ad-40f1-ba07-ce15a4711d4d" />
-
+## Xeoverse與sns3資料對比
 
 XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）與 MAC 層（L2）的模擬
 | xeoverse資料 | 對應sns3部分 | 目的 |
@@ -431,8 +429,7 @@ XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）
 | routing_configs |MAC / PHY Stack | 參考 XEO 的路由決策，在 SNS3 中設定靜態路由或時槽排程基準。 | 
 | constellation_ip_...json |ns-3 Network / Internet | 雖然兩套系統位址管理不同，但可用來統一節點的 ID 映射關係。 | 
 
-*TLE（Two-Line Element）是一種「用兩行文字描述一顆衛星軌道」的標準格式檔案。
-只要有 TLE + 時間，就能用數學模型算出「任一時間點衛星在太空中的座標」。
+
 
 ## 轉換routing table給sns3
 
