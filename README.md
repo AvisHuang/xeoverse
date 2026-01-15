@@ -45,7 +45,8 @@ STARLINK-1007
 
 ## 二、Constellation_topology(IV.B)
 
-會藉由所輸入的satellite,ground segment來算出當下拓樸的連接狀態並輸出connectivity matrix
+會藉由所輸入的並利用[constellation.py](https://github.com/AvisHuang/xeoverse/blob/main/constellation_topology.py)來算出當下拓樸的連接狀態並輸出connectivity matrix
+輸入：satellite,ground segment
 
 
 
