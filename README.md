@@ -64,7 +64,8 @@ Xeoverse 會於每一個模擬時間點輸出一份adjacency matrix（鄰接矩�
 這只是衛星index,如果要知道衛星名字要去constellation_ip_addresses_20231113_103000.json對照
 
 ## 三、Constellation link characteristics
-Constellation Link Characteristics (IV.C) 是將「拓樸結構」轉化為「網路參數」的關鍵橋樑。它負責為拓樸中的每一條連線（那些鄰接矩陣裡的 1）賦予真實的物理屬性
+Constellation Link Characteristics (IV.C) 是將「拓樸結構」轉化為「網路參數」的關鍵橋樑。它負責為拓樸中的每一條連線賦予真實的物理屬性
+
 Constellation link characteristics會藉由輸入connectivity matrix到[Constellation_preprocessing.py](https://github.com/AvisHuang/xeoverse/blob/main/constellation_preprocessing.py)去做數據處理並輸出latency matrix和capacity matrix
 
 輸入：Connectivity Matrix
