@@ -1,0 +1,55 @@
+simulation:
+  start_time: '2023-11-13 10:30:00'
+  step_seconds: 1
+  simulation_length_seconds: 60
+  directory_results: 'results_{date}'
+
+parameters:
+  isl_links: 3
+  topology_structure: 'cross-orbit'
+  isl_max_distance_km: 5000
+  inclination_tolerance: 0.06
+  target_inclination: 53.0
+  raan_tolerance: 1.0
+  raan_step: 5.0
+
+rf-parameters:
+  downlink:
+    frequency: 12.7 #GHz
+    bandwidth: 240 #MHz
+  uplink:
+    frequency: 14.5 #GHz
+    bandwidth: 60 #MHz
+  gw:
+    tx_power: 
+    tx_gain:  
+    rx_gain:  
+  terminal:
+    tx_power: 36.08526    #dBm -- https://apps.fcc.gov/els/GetAtt.html?id=259301
+    tx_gain:  34.6        #dBi -- https://apps.fcc.gov/els/GetAtt.html?id=259301
+    rx_gain:  33.2        #dBi -- https://apps.fcc.gov/els/GetAtt.html?id=259301
+    merit_figure: 9.2     #dB/K
+  satellite:
+    tx_power_eirp: 66.89  #dbW -- 
+    tx_gain:
+    rx_gain: 25           #dBi -- estimated
+  other_losses:
+    polarization_loss: 3
+    misalignment_attenuation_losses: 0.5
+  
+tle_data:
+  path: '/home/avis/xeoverse/tle.txt'
+
+terminal_data:
+  path: '/home/avis/xeoverse/terminals.txt'
+
+experiment:
+  end1: London
+  end2: SanFranci
+  type: iperf
+  cc: cubic
+  duration_seconds: 300
+
+weather-api:
+  include_weather: "no"
+  api_key: "dd0d697758c8b72a2d66c91fc1bfb7a3"
