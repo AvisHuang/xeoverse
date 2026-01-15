@@ -68,7 +68,7 @@ Constellation Link Characteristics (IV.C) 是將「拓樸結構」轉化為「�
 
 轉換目的：因為IV.B所產生的adjacency matrix只能得知是否相連，無法得知距離 延遲 容量，當經過數據計算後就可以輸出latency matrix和capacity matrix做routing去計算出最短的路徑
 
-Constellation link characteristics會藉由輸入connectivity matrix到[Constellation_preprocessing.py](https://github.com/AvisHuang/xeoverse/blob/main/constellation_preprocessing.py)去做數據處理並輸出latency matrix和capacity matrix
+Constellation link characteristics會藉由輸入connectivity matrix到[Constellation_preprocessing.py](https://github.com/AvisHuang/xeoverse/blob/main/constellation_preprocessing.py)進行調度，然後就會去constellation_topology.py及x_net/constellation_network.py計算邏輯並輸出latency matrix和capacity matrix
 
 輸入：Connectivity Matrix
 輸出：latency matrix和capacity matrix
@@ -80,7 +80,7 @@ Constellation link characteristics會藉由輸入connectivity matrix到[Constell
 $$Latency = \frac{Distance \times 1000 (\text{米})}{3 \times 10^8 (\text{光速})} \times 1000 (\text{轉毫秒})$$
 ### 2.capacity matrix
 在某一個時間點，每一對節點之間最多能傳多少資料，它有分成GSL和ISL
-,ISL的頻寬是直接在config.yaml定義的,GSL則是動態計算，是引用衛星位置與地面站位置，計算出訊號強度，再利用香農定理（Shannon-Hartley Theorem）計算出該時刻的最大容量。
+,ISL的頻寬是直接在config.yaml定義的,GSL則是動態計算，是引用衛星位置與地面站位置，計算出訊號強度，再利用香農定理計算出該時刻的最大容量。
 
 ## 四、Constellation Routing(IV.D)
 
