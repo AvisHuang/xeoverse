@@ -43,7 +43,7 @@ STARLINK-1007
 
 描述時間(simulation函式)、衛星怎麼互連(parameters函式)、無線通道假設(rf-parameters函式)、資料來源在哪、實驗要做什麼(experiment函式)
 
-## Constellation_topology(IV.B)
+## 二、Constellation_topology(IV.B)
 
 會藉由所輸入的satellite,ground segment來算出當下拓樸的連接狀態並輸出connectivity matrix
 
@@ -52,6 +52,7 @@ STARLINK-1007
 ## Xeoverse做完模擬產生的OUTPUT
 
 Xeoverse 在模擬過程中，於 routing 計算相關流程中輸出多項中間與最終結果，包含 connectivity_matrices、routing_configs、constellation_ip_addresses 與 path.json 等檔案，作為後續 Mininet 網路模擬之輸入與設定依據
+
 
 ### 1.1 connectivity_matrices  
 connectivity_matrices描述各時間點衛星之間是否存在可用連線，用以表示當下的網路拓樸狀態   ，並作為後續 routing 計算之基礎輸入資料
