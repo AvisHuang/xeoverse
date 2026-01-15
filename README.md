@@ -53,7 +53,7 @@ STARLINK-1007
 
 Xeoverse 會於每一個模擬時間點輸出一份adjacency matrix（鄰接矩陣），其矩陣大小為N*N(N為衛星數量)，用以表示該時間點衛星節點之間的連線關係。以 adjacency_matrix_20231113_103000.json 為例，該檔案描述 2023/11/13 10:30:00 時刻之衛星連線狀態。
 
-<img width="964" height="1008" alt="image" src="https://github.com/user-attachments/assets/451f63da-1c0b-4020-82d7-49729f9739c1" />
+<img width="164" height="1008" alt="image" src="https://github.com/user-attachments/assets/451f63da-1c0b-4020-82d7-49729f9739c1" />
 
 
 
