@@ -51,6 +51,17 @@ STARLINK-1007
 
 ### 1.connectivity matrix
 
+Xeoverse 會於每一個模擬時間點輸出一份 adjacency matrix（鄰接矩陣），用以表示該時間點衛星節點之間的連線關係。以 adjacency_matrix_20231113_103000.json 為例，該檔案描述 2023/11/13 10:30:00 時刻之衛星連線狀態。
+
+以 adjacency_matrix_20231113_103000.json 為例，該檔案描述 2023/11/13 10:30:00 時刻之衛星連線狀態。
+
+<img width="964" height="1008" alt="image" src="https://github.com/user-attachments/assets/451f63da-1c0b-4020-82d7-49729f9739c1" />
+
+
+
+這只是衛星index,如果要知道衛星名子要去constellation_ip_addresses_20231113_103000.json對照
+
+
 ## Xeoverse做完模擬產生的OUTPUT
 
 Xeoverse 在模擬過程中，於 routing 計算相關流程中輸出多項中間與最終結果，包含 connectivity_matrices、routing_configs、constellation_ip_addresses 與 path.json 等檔案，作為後續 Mininet 網路模擬之輸入與設定依據
@@ -61,9 +72,7 @@ connectivity_matrices描述各時間點衛星之間是否存在可用連線，�
 <img width="960" height="777" alt="image" src="https://github.com/user-attachments/assets/6c09b286-eb2d-4939-8c83-e34ca1f4497a" />   
 Xeoverse 會於每一個模擬時間點輸出一份 adjacency matrix（鄰接矩陣），用以表示該時間點衛星節點之間的連線關係。以 adjacency_matrix_20231113_103000.json 為例，該檔案描述 2023/11/13 10:30:00 時刻之衛星連線狀態。
 
-<img width="964" height="1008" alt="image" src="https://github.com/user-attachments/assets/451f63da-1c0b-4020-82d7-49729f9739c1" />
-adjencency matrix內容
-這只是衛星index,如果要知道衛星名子要去constellation_ip_addresses_20231113_103000.json對照
+
 
 ### 1.2 routing_configs
 
