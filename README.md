@@ -14,9 +14,10 @@
 
 
 ## 一、Constellation Geometry (IV.A)
-會藉由所輸入的TLE和config.yaml來進行計算，算出每一顆衛星當下的位置及角度，並輸出satellite ground segment 
+會藉由所輸入的TLE和config.yaml來進行計算，算出每一顆衛星當下的位置及角度
 
 輸入：[TLE](https://github.com/AvisHuang/xeoverse/blob/main/tle.txt)、[config.yaml](https://github.com/AvisHuang/xeoverse/blob/main/config.yaml)
+輸出：satellite ground segment 
 ### 1.TLE（Two-Line Element Set，雙行軌道要素）
 
 TLE用兩行文字描述一顆人造衛星在某一時間點的軌道狀態的標準格式，可搭配SGP4計算衛星在任意時間的空間位置與速度
