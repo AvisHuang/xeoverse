@@ -73,6 +73,9 @@ Constellation link characteristics會藉由輸入connectivity matrix到[Constell
 輸入：Connectivity Matrix
 輸出：latency matrix和capacity matrix
 
+### 1.
+
+
 ## 四、Constellation Routing(IV.D)
 
 在經過[Constellation Routing](constellation_routing.py)IV.D 計算後([用Dijkstra演算法](https://github.com/AvisHuang/xeoverse/blob/main/README.md#dilkstra%E6%BC%94%E7%AE%97%E6%B3%95))所產生的ISL及GSL路由
