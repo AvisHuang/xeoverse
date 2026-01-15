@@ -1,6 +1,19 @@
 # Xeoverse
 
+
 <img width="897" height="224" alt="image" src="https://github.com/user-attachments/assets/b9b80bc9-da6e-4919-8096-4c40ef2de90e" />
+
+
+##  short-term target
+- [ ] 
+- [ ] 修正表格顯示問題
+- [ ] 增加 README 目錄
+- [ ] 整理 `sns3_dynamic_routing` 數據
+- [ ] 完成專案安裝說明
+
+
+
+
 
 ## Xeoverse做完模擬產生的OUTPUT
 
