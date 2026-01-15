@@ -79,6 +79,9 @@ Constellation link characteristics會藉由輸入connectivity matrix到[Constell
 是由輸入的adjacency matrix去看哪顆衛星有連接，接著去tle的到每顆衛星的實際位置，然後才去topology.py中的函示calculate_satellites_latency_算出延遲
 $$Latency = \frac{Distance \times 1000 (\text{米})}{3 \times 10^8 (\text{光速})} \times 1000 (\text{轉毫秒})$$
 ### 2.capacity matrix
+在某一個時間點，每一對節點之間最多能傳多少資料，它有分成GSL和ISL
+,ISL的頻寬是直接在config.yaml定義的,GSL則是動態計算，是引用衛星位置與地面站位置，計算出訊號強度，再利用香農定理（Shannon-Hartley Theorem）計算出該時刻的最大容量。
+
 ## 四、Constellation Routing(IV.D)
 
 在經過[Constellation Routing](constellation_routing.py)IV.D 計算後([用Dijkstra演算法](https://github.com/AvisHuang/xeoverse/blob/main/README.md#dilkstra%E6%BC%94%E7%AE%97%E6%B3%95))所產生的ISL及GSL路由
