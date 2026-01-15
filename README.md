@@ -444,6 +444,14 @@ XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）
 
 ## routing
 
+在 Constellation Routing (IV.D) 這個階段經過計算後所產生的資料
+
+1.構建拓樸：首先，Xeoverse 會根據已知的軌道資料(config.yaml)，利用ISL規則去計算出衛星與衛星之間、衛星與地面站之間，哪些是可以連通的。
+
+2.演算法運算：使用 Dijkstra 的最短路徑演算法，考慮每一條連線（鏈路）的權重去決定出最短的路徑。
+
+3.生成指令：最後將運算結果轉化為 Linux 作業系統看得懂的 ip route 指令，並存成.sh檔案。
+
 
 ## 轉換routing table給sns3
 
