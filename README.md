@@ -369,7 +369,7 @@ net.addLink(
 
 在經過[Constellation Routing](constellation_routing.py)計算後所產生的ISL及GSL路由
 
-在result會儲存每一秒衛星的拓樸
+在result會儲存每一秒衛星的路由表並轉呈ip route指令
 <img width="1052" height="700" alt="image" src="https://github.com/user-attachments/assets/ca15a244-5619-4d21-bc1a-4199e1336cf8" />
 
 每一顆衛星為一個router
