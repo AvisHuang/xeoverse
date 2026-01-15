@@ -369,6 +369,13 @@ net.addLink(
 
 在經過[Constellation Routing](constellation_routing.py)計算後所產生的ISL及GSL路由
 
+在result會儲存每一秒衛星的拓樸
+<img width="1052" height="700" alt="image" src="https://github.com/user-attachments/assets/ca15a244-5619-4d21-bc1a-4199e1336cf8" />
+
+每一顆衛星為一個router
+內部就是每一顆衛星的routing table指令
+
+
 1.構建拓樸：首先，Xeoverse 會根據已知的軌道資料(config.yaml)，利用ISL規則去計算出衛星與衛星之間、衛星與地面站之間，哪些是可以連通的。
 
 2.演算法運算：使用 Dijkstra 的最短路徑演算法，考慮每一條連線（鏈路）的權重去決定出最短的路徑。
