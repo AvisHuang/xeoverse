@@ -376,7 +376,7 @@ XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）
 
 ## Routing
 
-在[Constellation Routing](constellation_routing.py)這個階段經過計算後所產生的資料
+在[Constellation Routing](constellation_routing.py)IV.D這個階段經過計算後所產生的
 
 1.構建拓樸：首先，Xeoverse 會根據已知的軌道資料(config.yaml)，利用ISL規則去計算出衛星與衛星之間、衛星與地面站之間，哪些是可以連通的。
 
