@@ -14,7 +14,7 @@
 
 
 ## 一、Constellation Geometry (IV.A)
-會藉由所輸入的TLE和config.yaml來進行計算，算出每一顆衛星當下的位置及角度
+會藉由所輸入的TLE和config.yaml來進行計算，算出每一顆衛星當下的位置及角度，並輸出satellite ground segment 
 
 輸入：[TLE](https://github.com/AvisHuang/xeoverse/blob/main/tle.txt)、[config.yaml](https://github.com/AvisHuang/xeoverse/blob/main/config.yaml)
 ### 1.TLE（Two-Line Element Set，雙行軌道要素）
@@ -42,7 +42,7 @@ STARLINK-1007
 
 描述時間(simulation函式)、衛星怎麼互連(parameters函式)、無線通道假設(rf-parameters函式)、資料來源在哪、實驗要做什麼(experiment函式)
 
-
+## IV.B
 
 
 ## Xeoverse做完模擬產生的OUTPUT
