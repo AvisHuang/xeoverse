@@ -241,11 +241,16 @@ ip_assignment:告訴 Mininet 每個介面的 IP
 設定每個 Host 的介面 IP、讓 routing 指令有正確的下一跳  
 routing_r:告訴 Mininet 要下哪些 routing 指令  
 
-## constellation_mininet
-
-https://github.com/AvisHuang/xeoverse/blob/main/constellation_mininet.py
+## [constellation_mininet](https://github.com/AvisHuang/xeoverse/blob/main/constellation_mininet.py)
 
 ### 測量[ping](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L567)
+
+測量ping結構圖
+
+<img width="621" height="391" alt="image" src="https://github.com/user-attachments/assets/e9c2d3be-984b-4fc0-a262-71ae5299f31b" />
+
+RTT=GSL1+ISL+GSL2+ICMP回覆
+
 ```
  if config['experiment']['type'] == "ping" or config['experiment']['type'] == "Ping":
         end1_s = config['experiment']['end1'].replace(" ","") ##取得實驗起點名稱
@@ -261,18 +266,12 @@ https://github.com/AvisHuang/xeoverse/blob/main/constellation_mininet.py
 |{terminal2_ip}|目的地ip|
 | & | 背景執行 |
 
-
 host_end1去使用command指令測量
 
-測量ping結構圖
-
-<img width="621" height="391" alt="image" src="https://github.com/user-attachments/assets/e9c2d3be-984b-4fc0-a262-71ae5299f31b" />
-
-RTT=GSL1+ISL+GSL2+ICMP回覆
 
 
 
-#### [iperf](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L571)
+### 測量[iperf](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L571)
 ```
 command2 = f"iperf -s &"
 command1 = f"iperf -c {terminal2_ip} -C {config['experiment']['cc']} -i1 -t {config['experiment']['duration_seconds']} >> results_..._.log 2>&1 &"
