@@ -246,11 +246,21 @@ routing_r:告訴 Mininet 要下哪些 routing 指令
 https://github.com/AvisHuang/xeoverse/blob/main/constellation_mininet.py
 
 ### 測量[ping](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L567)
+```
+ if config['experiment']['type'] == "ping" or config['experiment']['type'] == "Ping":
+        end1_s = config['experiment']['end1'].replace(" ","") ##取得實驗起點名稱
+        end2_s = config['experiment']['end2'].replace(" ","") ##取得實驗終點名稱
+        command = f"ping -c {config['experiment']['duration_seconds']} {terminal2_ip} >> results_{config['experiment']['type']}_{end1_s}_{end2_s}_.log &"
+        result = host_end1.cmd(command)  ##以起點去測這條指令
+        print(result)
+```
+| 參數 | 意義 |
+|------|------|
+| -c | 傳幾個封包 | 
+| {config['experiment']['duration_seconds']} | 會去config裡抓實驗的時間 |
+|{terminal2_ip}|目的地ip|
+| & | 背景執行 |
 
-| 指令 | 參數 | 目標 | 輸出 |
-|------|------|------|------|
-| ping | -c | terminal2_ip | >> results_..._.log |
-| 要做的事情 | 次數 | 對 terminal2 | 回傳 result |
 
 host_end1去使用command指令測量
 
@@ -259,6 +269,8 @@ host_end1去使用command指令測量
 <img width="621" height="391" alt="image" src="https://github.com/user-attachments/assets/e9c2d3be-984b-4fc0-a262-71ae5299f31b" />
 
 RTT=GSL1+ISL+GSL2+ICMP回覆
+
+
 
 #### [iperf](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L571)
 ```
