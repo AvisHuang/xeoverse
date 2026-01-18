@@ -397,7 +397,7 @@ host_end1去使用command指令測量
 
 測量ping結構圖
 
-<img width="699" height="372" alt="image" src="https://github.com/user-attachments/assets/f9c2dba6-2394-4d62-9e02-380f68a33166" />
+<img width="621" height="391" alt="image" src="https://github.com/user-attachments/assets/e9c2d3be-984b-4fc0-a262-71ae5299f31b" />
 
 RTT=GSL1+ISL+GSL2+ICMP回覆
 
