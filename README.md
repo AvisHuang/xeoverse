@@ -253,9 +253,9 @@ RTT=GSL1+ISL+GSL2+ICMP回覆
 
 ```
  if config['experiment']['type'] == "ping" or config['experiment']['type'] == "Ping":
-        end1_s = config['experiment']['end1'].replace(" ","") ##取得實驗起點名稱
-        end2_s = config['experiment']['end2'].replace(" ","") ##取得實驗終點名稱
-        command = f"ping -c {config['experiment']['duration_seconds']} {terminal2_ip} >> results_{config['experiment']['type']}_{end1_s}_{end2_s}_.log &"
+        end1_s = config['experiment']['end1'].replace(" ","") ##取得[實驗起點名稱](https://github.com/AvisHuang/xeoverse/blob/eccea8d602515ac38bac344a2408d4e8775e5bfa/config.yaml#L49)
+        end2_s = config['experiment']['end2'].replace(" ","") ##取得[實驗終點名稱](https://github.com/AvisHuang/xeoverse/blob/eccea8d602515ac38bac344a2408d4e8775e5bfa/config.yaml#L50)
+        command = f"ping -c [{config['experiment']['duration_seconds']}](https://github.com/AvisHuang/xeoverse/blob/eccea8d602515ac38bac344a2408d4e8775e5bfa/config.yaml#L53) {terminal2_ip} >> results_{config['experiment']['type']}_{end1_s}_{end2_s}_.log &"
         result = host_end1.cmd(command)  ##以起點去測這條指令
         print(result)
 ```
@@ -273,14 +273,16 @@ host_end1去使用command指令測量
 
 ### 測量[iperf](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L571)
 ```
-command2 = f"iperf -s &"
-command1 = f"iperf -c {terminal2_ip} -C {config['experiment']['cc']} -i1 -t {config['experiment']['duration_seconds']} >> results_..._.log 2>&1 &"
-host_end2.cmd(command2)
-host_end1.cmd(command1)
+  if config['experiment']['type'] == "iperf" or config['experiment']['type'] == "Iperf":
+        end1_s = config['experiment']['end1'].replace(" ","") ## [起點](https://github.com/AvisHuang/xeoverse/blob/eccea8d602515ac38bac344a2408d4e8775e5bfa/config.yaml#L49)
+        end2_s = config['experiment']['end2'].replace(" ","") ## [終點](https://github.com/AvisHuang/xeoverse/blob/eccea8d602515ac38bac344a2408d4e8775e5bfa/config.yaml#L50)
+
+        command1 = f"iperf -c {terminal2_ip} -C [{config['experiment']['cc']}](https://github.com/AvisHuang/xeoverse/blob/eccea8d602515ac38bac344a2408d4e8775e5bfa/config.yaml#L52) -i1 -t {config['experiment']['duration_seconds']} >> results_{config['experiment']['type']}_{end1_s}_{end2_s}_.log 2>&1 &"
+        command2 = f"iperf -s &"
 ```
 | 參數 | 意義 |
 |------|------|
-| -s | server mode | 
+| -s | server mode(等待接收封包) | 
 | & | 背景執行 |
 
 | 參數 | 意義 |
@@ -288,7 +290,7 @@ host_end1.cmd(command1)
 | -c | client mode | 
 | terminal2_ip | 目標端 IP |
 | -C | congestion control (可以決定傳的快慢 多寡)| 
-| -i 1 | 一秒輸出一次統計結果 |
+| -i 1 | 輸出的間隔(這裡1秒) |
 | -t {duration_seconds} | 實驗的時間 |
 | >> results_..._.log 2>&1 | 寫入實驗檔(不覆蓋) |
 | & | 背景執行 |
