@@ -171,7 +171,7 @@ A~C~D=2+3=5(但這樣比原本的1大 所以不更新)
 
 
 
-## Xeoverse做完模擬產生的OUTPUT
+## 五、Xeoverse做完模擬產生的OUTPUT
 
 Xeoverse 在模擬過程中，於 routing 計算相關流程中輸出多項中間與最終結果，包含 connectivity_matrices、routing_configs、constellation_ip_addresses 與 path.json 等檔案，作為後續 Mininet 網路模擬之輸入與設定依據
 
@@ -221,7 +221,7 @@ path 會隨模擬時間點變化，於不同時間點可能產生不同之路徑
 STARLINK-****表示是由這些衛星節點 ID 組成
 
 
-## Xeoverse呼叫Mininet
+## 六、Xeoverse呼叫Mininet
 
 <img width="1398" height="414" alt="image" src="https://github.com/user-attachments/assets/128b3c68-946a-45bc-a7b7-57f11c81c629" />
 
@@ -243,7 +243,7 @@ routing_r:告訴 Mininet 要下哪些 routing 指令
 
 ## [constellation_mininet](https://github.com/AvisHuang/xeoverse/blob/main/constellation_mininet.py)
 
-### 測量[ping](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L567)
+### (1).測量[ping](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L567)
 
 測量ping結構圖
 
@@ -271,7 +271,7 @@ host_end1去使用command指令測量
 
 
 
-### 測量[iperf](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L571)
+### (2).測量[iperf](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L571)
 ```
   if config['experiment']['type'] == "iperf" or config['experiment']['type'] == "Iperf":
         end1_s = config['experiment']['end1'].replace(" ","") ## [起點](https://github.com/AvisHuang/xeoverse/blob/eccea8d602515ac38bac344a2408d4e8775e5bfa/config.yaml#L49)
