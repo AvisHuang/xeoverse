@@ -245,6 +245,7 @@ routing_r:告訴 Mininet 要下哪些 routing 指令
 
 https://github.com/AvisHuang/xeoverse/blob/main/constellation_mininet.py
 
+### 測量ping
 | 指令 | 參數 | 目標 | 輸出 |
 |------|------|------|------|
 | ping | -c | terminal2_ip | >> results_..._.log |
@@ -286,10 +287,6 @@ host_end1.cmd(command1)
 
 *Congestion control 是 TCP 用來根據網路狀況動態調整傳輸速率的機制，在 iperf 實驗中透過 -C 指定不同演算法，可以觀察在高延遲的 NTN 環境下對吞吐量的影響。
 
-## Routing演算法
-
-Xeoverse採用 Dijkstra shortest path 演算法進行 routing 計算  
-在x_routing中有一個定義dijkstra的函式用來算shortest_path  
 
 ## GW-SAT建立link
 
