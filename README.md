@@ -231,7 +231,6 @@ Xeoverse在[main.py](https://github.com/AvisHuang/xeoverse/blob/fa7c535475d880b3
 
 ```
 xEO_mininet.setup_mininet_topology(new_satellites, path, ip_assignment, routing_r)
-
 ```
 new_satellites:告訴 Mininet要建哪些節點、每個節點幾個介面   
 決定要建哪些 Host(可以發送或接收的端點)  
