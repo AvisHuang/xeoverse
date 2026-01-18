@@ -222,7 +222,8 @@ STARLINK-****表示是由這些衛星節點 ID 組成
 
 
 ## Xeoverse呼叫Mininet
-<img width="938" height="254" alt="image" src="https://github.com/user-attachments/assets/60ba7b73-6faa-4e5d-8073-be72a8ed9ebf" />
+
+<img width="1398" height="414" alt="image" src="https://github.com/user-attachments/assets/128b3c68-946a-45bc-a7b7-57f11c81c629" />
 
 呼叫mininet流程圖
   
