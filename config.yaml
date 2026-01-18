@@ -21,23 +21,24 @@ rf-parameters:  ##鏈路特性參數(GSL)
   uplink:
     frequency: 14.5 #GHz
     bandwidth: 60 #MHz
+  #因為沒有用到大型地面站 所以不用用到gateway 是直接使用terminals
   gw:
     tx_power: 
     tx_gain:  
     rx_gain:  
   terminal:
-    tx_power: 36.08526    #dBm -- https://apps.fcc.gov/els/GetAtt.html?id=259301
-    tx_gain:  34.6        #dBi -- https://apps.fcc.gov/els/GetAtt.html?id=259301
-    rx_gain:  33.2        #dBi -- https://apps.fcc.gov/els/GetAtt.html?id=259301
-    merit_figure: 9.2     #dB/K
+    tx_power: 36.08526    #dBm -- https://apps.fcc.gov/els/GetAtt.html?id=259301  ##終端設備發射機的輸出功率
+    tx_gain:  34.6        #dBi -- https://apps.fcc.gov/els/GetAtt.html?id=259301  ##發射時的方向性增益(發射信號會像光束一聚焦)
+    rx_gain:  33.2        #dBi -- https://apps.fcc.gov/els/GetAtt.html?id=259301  ##在接收時的方向性增益(較高的 rx_gain 能幫助設備在雜訊中過濾出有用的數據封包)
+    merit_figure: 9.2     #dB/K  ##決定增益會被雜訊受到德高擾比例
   satellite:
-    tx_power_eirp: 66.89  #dbW -- ##決定了地面端收到的信號強度
+    tx_power_eirp: 66.89  #dbW -- ##等向有效輻射功率
     tx_gain:
     rx_gain: 25           #dBi -- estimated ##衛星接收來自地面站或終端機信號的增益。
   other_losses:           ##定義鏈路損失
     polarization_loss: 3  ##極化損耗(發射端與接收端的電磁波極化方向不完全匹配時會損失的功率)
     misalignment_attenuation_losses: 0.5 ##模擬天線沒有百分之百對準衛星時產生的輕微信號衰減
-  
+  ##-------------- 可以計算SNR(tx_power+tx_gain-loss) 再用SNR去計算香濃定理找出capacity
 tle_data:  ##把路徑寫出來讓程式去抓TLE
   path: '/home/avis/xeoverse/tle.txt'
 
