@@ -227,7 +227,7 @@ STARLINK-****表示是由這些衛星節點 ID 組成
 
 呼叫mininet流程圖
   
-Xeoverse在[main.py](https://github.com/AvisHuang/xeoverse/blob/fa7c535475d880b32b0f14bf83a51bcdf14464dc/main.py#L123)中呼叫 x_substrate/constellation_mininet.py 裡的[setup_mininet_topology()](https://github.com/AvisHuang/xeoverse/blob/fa7c535475d880b32b0f14bf83a51bcdf14464dc/constellation_mininet.py#L362)函式
+Xeoverse在[main.py](https://github.com/AvisHuang/xeoverse/blob/fa7c535475d880b32b0f14bf83a51bcdf14464dc/main.py#L123)中呼叫 x_substrate/[constellation_mininet.py](https://github.com/AvisHuang/xeoverse/blob/main/constellation_mininet.py) 裡的[setup_mininet_topology()](https://github.com/AvisHuang/xeoverse/blob/fa7c535475d880b32b0f14bf83a51bcdf14464dc/constellation_mininet.py#L362)函式
 
 ```
 xEO_mininet.setup_mininet_topology(new_satellites, path, ip_assignment, routing_r)
@@ -240,7 +240,7 @@ ip_assignment:告訴 Mininet 每個介面的 IP
 設定每個 Host 的介面 IP、讓 routing 指令有正確的下一跳  
 routing_r:告訴 Mininet 要下哪些 routing 指令  
 
-## [constellation_mininet](https://github.com/AvisHuang/xeoverse/blob/main/constellation_mininet.py)
+## 
 
 ### (1).測量[ping](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L567)
 
