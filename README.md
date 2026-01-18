@@ -52,7 +52,7 @@ STARLINK-1007
 
 前後上下鄰居：同軌道連線
 
-左右鄰居：跨軌道連線(隔壁條軌道)，會透過角度來判斷左右鄰居(左:0~180,右:180~360)
+左右鄰居：跨軌道連線(隔壁條軌道)，會透過角度來判斷左右鄰居(左: 0 ~ 180,右: 180 ~ 360)
 
 ### 1.[connectivity_matrix](https://github.com/AvisHuang/xeoverse/blob/main/adjacency_matrix_20231113_103000.json)
 
