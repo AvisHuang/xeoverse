@@ -49,7 +49,7 @@ experiment: ##定義起點和終點分別為London/SanFranci
   end1: London
   end2: SanFranci
   type: iperf  ##指定用流量測試的工具類型
-  cc: cubic  ##擁塞控制演算法
+  cc: cubic  ##擁塞控制演算法(演算法決定了封包對延遲的反應 cubic 會根據丟包情況來調整發送速度)
   duration_seconds: 300
 
 weather-api:
