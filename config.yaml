@@ -8,9 +8,9 @@ parameters: ##拓樸連線參數
   isl_links: 3  ##限制每顆衛星ISL最多3條
   topology_structure: 'cross-orbit'  ##定義連線為cross orbit 然後會去呼叫CrossOrbitTopology 然後去找cross orbit的左右鄰居
   isl_max_distance_km: 5000  ##限制連線不能超過5000KM
-  inclination_tolerance: 0.06 ##用來過濾不屬於 $53^\circ$ 殼層的衛星(殼層是指同一高度 同一傾角的衛星群)
+  inclination_tolerance: 0.06 ##軌道傾角的誤差
   target_inclination: 53.0 ##目標軌道傾角
-  raan_tolerance: 1.0  ##目標軌道傾角的誤差
+  raan_tolerance: 1.0  ##目標軌道間的誤差
   raan_step: 5.0 ##定義了軌道面之間剛好5度才算隔壁軌道
 
 rf-parameters:  ##鏈路特性參數(GSL)
