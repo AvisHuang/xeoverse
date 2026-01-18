@@ -227,7 +227,7 @@ STARLINK-****表示是由這些衛星節點 ID 組成
 
 呼叫mininet流程圖
   
-Xeoverse在main.py中呼叫 x_substrate/constellation_mininet.py 裡的setup_mininet_topology()函式
+Xeoverse在[main.py](https://github.com/AvisHuang/xeoverse/blob/fa7c535475d880b32b0f14bf83a51bcdf14464dc/main.py#L123)中呼叫 x_substrate/constellation_mininet.py 裡的[setup_mininet_topology()](https://github.com/AvisHuang/xeoverse/blob/fa7c535475d880b32b0f14bf83a51bcdf14464dc/constellation_mininet.py#L362)函式
 
 ```
 xEO_mininet.setup_mininet_topology(new_satellites, path, ip_assignment, routing_r)
