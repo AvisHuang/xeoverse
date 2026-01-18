@@ -6,15 +6,16 @@ simulation: ##模擬時間部分
 
 parameters: ##拓樸連線參數
   isl_links: 3  ##限制每顆衛星ISL最多3條
-  topology_structure: 'cross-orbit'  ##定義連線為cross orbit 會去呼叫CrossOrbitTopology 然後去找cross orbit的左右鄰居
+  topology_structure: 'cross-orbit'  ##定義連線為cross orbit 然後會去呼叫CrossOrbitTopology 然後去找cross orbit的左右鄰居
   isl_max_distance_km: 5000  ##限制連線不能超過5000KM
-  inclination_tolerance: 0.06 ##用來過濾不屬於 $53^\circ$ 殼層的衛星
+  inclination_tolerance: 0.06 ##用來過濾不屬於 $53^\circ$ 殼層的衛星(殼層是指同一高度 同一傾角的衛星群)
   target_inclination: 53.0 ##目標軌道傾角
   raan_tolerance: 1.0  ##目標軌道傾角的誤差
   raan_step: 5.0 ##定義了軌道面之間剛好5度才算隔壁軌道
 
 rf-parameters:  ##鏈路特性參數(GSL)
-  downlink:  ##
+  ##定義下行上行鏈路(GSL)的BW和frequency
+  downlink:  
     frequency: 12.7 #GHz
     bandwidth: 240 #MHz
   uplink:
@@ -30,12 +31,12 @@ rf-parameters:  ##鏈路特性參數(GSL)
     rx_gain:  33.2        #dBi -- https://apps.fcc.gov/els/GetAtt.html?id=259301
     merit_figure: 9.2     #dB/K
   satellite:
-    tx_power_eirp: 66.89  #dbW -- 
+    tx_power_eirp: 66.89  #dbW -- ##決定了地面端收到的信號強度
     tx_gain:
-    rx_gain: 25           #dBi -- estimated
-  other_losses:
-    polarization_loss: 3
-    misalignment_attenuation_losses: 0.5
+    rx_gain: 25           #dBi -- estimated ##衛星接收來自地面站或終端機信號的增益。
+  other_losses:           ##定義鏈路損失
+    polarization_loss: 3  ##極化損耗(發射端與接收端的電磁波極化方向不完全匹配時會損失的功率)
+    misalignment_attenuation_losses: 0.5 ##模擬天線沒有百分之百對準衛星時產生的輕微信號衰減
   
 tle_data:  ##把路徑寫出來讓程式去抓TLE
   path: '/home/avis/xeoverse/tle.txt'
