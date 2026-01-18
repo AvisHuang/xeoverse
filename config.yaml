@@ -1,20 +1,20 @@
-simulation:
-  start_time: '2023-11-13 10:30:00'
-  step_seconds: 1
-  simulation_length_seconds: 60
+simulation: ##模擬時間部分
+  start_time: '2023-11-13 10:30:00' ##開始時間
+  step_seconds: 1  ##每幾秒重算一次拓樸並輸出
+  simulation_length_seconds: 60  ##總共產生60秒
   directory_results: 'results_{date}'
 
-parameters:
-  isl_links: 3
-  topology_structure: 'cross-orbit'
-  isl_max_distance_km: 5000
-  inclination_tolerance: 0.06
-  target_inclination: 53.0
-  raan_tolerance: 1.0
-  raan_step: 5.0
+parameters: ##拓樸連線參數
+  isl_links: 3  ##限制每顆衛星ISL最多3條
+  topology_structure: 'cross-orbit'  ##定義連線為cross orbit 會去呼叫CrossOrbitTopology 然後去找cross orbit的左右鄰居
+  isl_max_distance_km: 5000  ##限制連線不能超過5000KM
+  inclination_tolerance: 0.06 ##用來過濾不屬於 $53^\circ$ 殼層的衛星
+  target_inclination: 53.0 ##目標軌道傾角
+  raan_tolerance: 1.0  ##目標軌道傾角的誤差
+  raan_step: 5.0 ##定義了軌道面之間剛好5度才算隔壁軌道
 
-rf-parameters:
-  downlink:
+rf-parameters:  ##鏈路特性參數(GSL)
+  downlink:  ##
     frequency: 12.7 #GHz
     bandwidth: 240 #MHz
   uplink:
@@ -37,13 +37,13 @@ rf-parameters:
     polarization_loss: 3
     misalignment_attenuation_losses: 0.5
   
-tle_data:
+tle_data:  ##把路徑寫出來讓程式去抓TLE
   path: '/home/avis/xeoverse/tle.txt'
 
 terminal_data:
   path: '/home/avis/xeoverse/terminals.txt'
 
-experiment:
+experiment: ##定義起點和終點分別為London/SanFranci
   end1: London
   end2: SanFranci
   type: iperf
