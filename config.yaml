@@ -36,8 +36,8 @@ rf-parameters:  ##鏈路特性參數(GSL)
     tx_gain:
     rx_gain: 25           #dBi -- estimated ##衛星接收來自地面站或終端機信號的增益。
   other_losses:           ##定義鏈路損失
-    polarization_loss: 3  ##極化損耗(發射端與接收端的電磁波極化方向不完全匹配時會損失的功率)
-    misalignment_attenuation_losses: 0.5 ##模擬天線沒有百分之百對準衛星時產生的輕微信號衰減
+    polarization_loss: 3  ##極化損耗(發射端與接收端的電磁波極化方向不完全匹配時會損失的功率 單位:dB)
+    misalignment_attenuation_losses: 0.5 ##模擬天線沒有百分之百對準衛星時產生的輕微信號衰減 單位:dB
   ##-------------- 可以計算SNR(tx_power+tx_gain-loss) 再用SNR去計算香濃定理找出capacity
 tle_data:  ##把路徑寫出來讓程式去抓TLE
   path: '/home/avis/xeoverse/tle.txt'
