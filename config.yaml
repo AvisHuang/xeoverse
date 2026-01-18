@@ -48,10 +48,11 @@ terminal_data:
 experiment: ##定義起點和終點分別為London/SanFranci
   end1: London
   end2: SanFranci
-  type: iperf
-  cc: cubic
+  type: iperf  ##指定用流量測試的工具類型
+  cc: cubic  ##擁塞控制演算法
   duration_seconds: 300
 
 weather-api:
-  include_weather: "no"
-  api_key: "dd0d697758c8b72a2d66c91fc1bfb7a3"
+  include_weather: "no"  ##沒有引進天氣api
+  api_key: "dd0d697758c8b72a2d66c91fc1bfb7a3" ##氣象數據服務的授權碼
+  ##若下雨射頻能量會變小 影響SNR 進而影響capacity
