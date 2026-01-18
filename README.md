@@ -245,7 +245,8 @@ routing_r:告訴 Mininet 要下哪些 routing 指令
 
 https://github.com/AvisHuang/xeoverse/blob/main/constellation_mininet.py
 
-### 測量ping
+### 測量[ping](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L567)
+
 | 指令 | 參數 | 目標 | 輸出 |
 |------|------|------|------|
 | ping | -c | terminal2_ip | >> results_..._.log |
@@ -259,7 +260,7 @@ host_end1去使用command指令測量
 
 RTT=GSL1+ISL+GSL2+ICMP回覆
 
-#### iperf
+#### [iperf](https://github.com/AvisHuang/xeoverse/blob/609fe49ae307e8ad98273d859cddfda648bfb74d/constellation_mininet.py#L571)
 ```
 command2 = f"iperf -s &"
 command1 = f"iperf -c {terminal2_ip} -C {config['experiment']['cc']} -i1 -t {config['experiment']['duration_seconds']} >> results_..._.log 2>&1 &"
