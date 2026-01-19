@@ -185,35 +185,36 @@ def delete_link_of_interface(net, host_name, interface_name, dummy_hostname):
 def create_link_between(intf1, intf2, ip1, ip2, net, satellites, timestamp): #net:mininet,satellite:星座物理資料庫
 
     dummy_h = net.get("dummy11")
-
-    #判斷
     for intf, ip in [(intf1, ip1), (intf2, ip2)]:
         parts = intf.split('-')
-        #判斷
+        #判斷length=3
         if len(parts) != 3:
             raise ValueError(f"Invalid interface format: {intf}")
         
         host_name, interface = parts[0]+parts[1], parts[2] #把切割完的再合成 ('starlink''1234''eth0')
-        x_host_name = naming_conversion_mininet_xeoverse(host_name)
-        host = net.get(host_name)
-
-        # Ensure previous interfaces exist
+        x_host_name = naming_conversion_mininet_xeoverse(host_name)  
+        host = net.get(host_name) # 透過名稱從 Mininet網路物件中抓取已建立的主機實體
+        
+        # Ensure previous interfaces exist 用for去檢查前面的介面是否存在(eth0)
         for prev_intf_num in range(int(interface.replace('eth', ''))):
             prev_intf_name = f"{x_host_name}-eth{prev_intf_num}".replace("STARLINK", "STL")
             interfaces = host.intfList()
-
             if not any(prev_intf_name == intf.name for intf in interfaces):
                 net.addLink(host, dummy_h, intfName1=prev_intf_name, cls=TCLink, params1={'ip': generate_random_ip() + '/30'}, params2={'ip': generate_random_ip() + '/30'}, bw=10, delay='5ms')  # Example bandwidth and delay
+                #host, dummy_h:把衛星主機先接到dummy
+                #intfName1=prev_intf_name:強制將衛星端的網卡命名為我們剛才組裝好的名字
+                #連線指定:用 TCLink
+                # params1={'ip': generate_random_ip() + '/30'}, params2={'ip': generate_random_ip() + '/30'},為這條連線的兩端隨機產生一個/30的IP。他是假連線但必須有IP才能讓網卡狀態顯示為已啟用
                 debug_print(f"{prev_intf_name} interface is added with IP= {host.IP(prev_intf_name)}", color='yellow')
 
 
-    host1_name, intf1_name = intf1.split('-')[0]+intf1.split('-')[1], intf1.replace("STARLINK", "STL")
+    host1_name, intf1_name = intf1.split('-')[0]+intf1.split('-')[1], intf1.replace("STARLINK", "STL")#名字拆開才能得到mininet的host id
     host2_name, intf2_name = intf2.split('-')[0]+intf2.split('-')[1], intf2.replace("STARLINK", "STL")
-    host1 = net.get(host1_name)
+    host1 = net.get(host1_name)#呼叫net拿到已經建好的host1,使HOST1變為實體主機
     host2 = net.get(host2_name)
 
-    if len(host1.intfList()) > 0 and any(intf1_name == intf.name for intf in host1.intfList()):
-        delete_link_of_interface(net, host1_name, intf1_name, "dummy11")
+    if len(host1.intfList()) > 0 and any(intf1_name == intf.name for intf in host1.intfList()):#檢查host1身上是否已經有任何網卡,先回傳host1物件到intf,再去判斷intf的內容是否和intf1_name一樣;如果有的話代表intf還接在dummy上 要刪除
+        delete_link_of_interface(net, host1_name, intf1_name, "dummy11")#呼叫刪除連線(主機插在dummy上的連線)
     
     if len(host2.intfList()) > 0 and  any(intf2_name == intf.name for intf in host2.intfList()):
         delete_link_of_interface(net, host2_name, intf2_name, "dummy11")
@@ -221,9 +222,12 @@ def create_link_between(intf1, intf2, ip1, ip2, net, satellites, timestamp): #ne
     if check_link_exists(net, host1_name, host2_name, intf1_name, intf2_name) == False:
         sat1 = satellites[naming_conversion_mininet_xeoverse(host1_name)]
         sat2 = satellites[naming_conversion_mininet_xeoverse(host2_name)]
-        link_latency = x_topo.calculate_satellites_latency_(sat1, sat2, timestamp)
-        link_bw = x_topo.calculate_satellites_bw_(naming_conversion_mininet_xeoverse(host1_name), naming_conversion_mininet_xeoverse(host2_name), timestamp)
-        net.addLink(host1, host2, intfName1=intf1_name, intfName2=intf2_name, cls=TCLink, params1={'ip': ip1 + '/30'}, params2={'ip': ip2 + '/30'}, bw=link_bw, delay=(str(link_latency)+'ms'))  # Example bandwidth and delay
+        link_latency = x_topo.calculate_satellites_latency_(sat1, sat2, timestamp)#計算link延遲
+        link_bw = x_topo.calculate_satellites_bw_(naming_conversion_mininet_xeoverse(host1_name), naming_conversion_mininet_xeoverse(host2_name), timestamp)#計算bw
+        net.addLink(host1, host2, intfName1=intf1_name, intfName2=intf2_name, cls=TCLink, params1={'ip': ip1 + '/30'}, params2={'ip': ip2 + '/30'}, bw=link_bw, delay=(str(link_latency)+'ms'))#把實際ISL連線建起來
+        #host1, host2:雙方的節點
+        #intfName1=intf1_name, intfName2=intf2_name:分別連線的介面
+        #params1={'ip': ip1 + '/30'}, params2={'ip': ip2 + '/30'}:分別端點 IP 分配
         debug_print(f"Link between {intf1_name} and {intf2_name} is created with two IP={ip1} and {ip2}")
     else:
         debug_print(f"Link between {intf1_name} and {intf2_name} is already exists with two IP={ip1} and {ip2}", color='yellow')
@@ -411,41 +415,42 @@ def setup_mininet_topology(satellites, path, ip_assignments, routing_dict, confi
         debug_print(f"-------------------------------------------------------------------------------------------------", color='white')
 
     ########################### Add the ground segments configurations ##########################
-    ground_segments = {}
-    config = read_config_(config_file)
-    end1 = config['experiment']['end1']
-    end2 = config['experiment']['end2']
+    ground_segments = {} #建一個放關於地面站的dict
+    config = read_config_(config_file) 
+    end1 = config['experiment']['end1'] #讀出config裡的london
+    end2 = config['experiment']['end2'] #讀出config裡的Sanfranci
 
-    host_end1 = net.addHost(end1.replace(" ", ""))
-    host_end2 = net.addHost(end2.replace(" ", ""))
-    ground_segments[end1] = host_end1
-    ground_segments[end2] = host_end2
+    host_end1 = net.addHost(end1.replace(" ", ""))#建立一個名為host_end1主機
+    host_end2 = net.addHost(end2.replace(" ", ""))#建立一個名為host_end1主機
+    ground_segments[end1] = host_end1  #把建好的主機存回dict
+    ground_segments[end2] = host_end2  #把建好的主機存回dict
 
-    terminal1_ip = xEO_network.find_the_ip_of_interface(end1+"-eth0", ip_assignments)
-    sat_intf, sat_ip = xEO_network.find_matching_network_interface(terminal1_ip, ip_assignments)
-    value = ip_assignments.pop(sat_intf, None)
-    net.addLink(host_end1, hosts[naming_conversion_xeoverse_mininet(sat_intf.split("-eth")[0])], intfName1=end1+"-eth0", intfName2=sat_intf.replace("STARLINK", "STL"), cls=TCLink, params1={'ip': terminal1_ip + '/30'}, params2={'ip': value + '/30'}, bw=130, delay='5ms')  # Example bandwidth and delay
-    host_end1.cmd(f"route add default gw {value}")
+    terminal1_ip = xEO_network.find_the_ip_of_interface(end1+"-eth0", ip_assignments) #去ip_assignment找地面站1的ip並存回terminal1_ip;eth0是因為地面站通往衛星只需要一個介面
+    sat_intf, sat_ip = xEO_network.find_matching_network_interface(terminal1_ip, ip_assignments)#去呼叫函式搜尋誰跟terminal1_ip位在同一個子網路
+    value = ip_assignments.pop(sat_intf, None)#把ip從assignment提取出後刪掉
+    net.addLink(host_end1, hosts[naming_conversion_xeoverse_mininet(sat_intf.split("-eth")[0])], intfName1=end1+"-eth0", intfName2=sat_intf.replace("STARLINK", "STL"), cls=TCLink, params1={'ip': terminal1_ip + '/30'}, params2={'ip': value + '/30'}, bw=130, delay='5ms') #跟上面的ISL一樣只是其中一端的link變地面站
+    host_end1.cmd(f"route add default gw {value}")#以地面端1去執行加路由規則add route##上行路徑
 
     terminal2_ip = xEO_network.find_the_ip_of_interface(end2+"-eth0", ip_assignments)
     sat_intf, sat_ip = xEO_network.find_matching_network_interface(terminal2_ip, ip_assignments)
     value = ip_assignments.pop(sat_intf, None)
     net.addLink(host_end2, hosts[naming_conversion_xeoverse_mininet(sat_intf.split("-eth")[0])], intfName1=end2.replace(" ", "")[:-3]+"-eth0", intfName2=sat_intf.replace("STARLINK", "STL"), cls=TCLink, params1={'ip': terminal2_ip + '/30'}, params2={'ip': value + '/30'}, bw=140, delay='5ms')  # Example bandwidth and delay
-    host_end2.cmd(f"route add default gw {value}")
+    host_end2.cmd(f"route add default gw {value}")#指定下行出口
 
-    sat1_ips = xEO_network.find_all_ips_of_sat(path[0], ip_assignments)
-    sat2_ips = xEO_network.find_all_ips_of_sat(path[len(path)-1], ip_assignments)
-    for satellite, commands in routing_dict.items():
-        for cmd in commands:
-            for ip in sat1_ips:
-                net_ip = xEO_network.get_network_address(ip, 30)
-                if net_ip in cmd or ip in cmd:
-                    commandParts = cmd.split("dev")
-                    if "via" in commandParts[0]:
-                        sub_command = commandParts[0].split("via")[1]
-                        routing_dict[satellite].append(f"ip route add {xEO_network.get_network_address(terminal1_ip, 30)} via{sub_command}dev{commandParts[1]}")
-                    else:
-                        routing_dict[satellite].append(f"ip route add {xEO_network.get_network_address(terminal1_ip, 30)} dev{commandParts[1]}")
+    sat1_ips = xEO_network.find_all_ips_of_sat(path[0], ip_assignments)#找出起點衛星
+    sat2_ips = xEO_network.find_all_ips_of_sat(path[len(path)-1], ip_assignments)#找出終點衛星
+    for satellite, commands in routing_dict.items():#去routing dict找相對應的指令(ip route add 192.168.26.84/30 via 192.168.1.10 dev STL-1054-eth0)
+        for cmd in commands:#cmd是指很多command所組成
+            for ip in sat1_ips:#逐一檢查起點衛星(sat1)的ip
+                net_ip = xEO_network.get_network_address(ip, 30)#將IP轉換成/30網段地址(因為routing table的目的地主要是以網段儲存但這個ip是具體的位置 所以要先轉網段)
+                if net_ip in cmd or ip in cmd:#判斷cmd中的指令是否能匹配ip網段或ip
+                    commandParts = cmd.split("dev")#從dev切割開
+                    if "via" in commandParts[0]:#(commandParts[0]儲存的是原始指令中目的地網段以及下一跳路徑的部分,eg:ip route add 192.168.26.84/30 via 192.168.1.10)
+                        #有via就是靠別人轉發
+                        sub_command = commandParts[0].split("via")[1]#( 192.168.1.10:即是中繼衛星的ip)
+                        routing_dict[satellite].append(f"ip route add {xEO_network.get_network_address(terminal1_ip, 30)} via{sub_command}dev{commandParts[1]}")#{xEO_network.get_network_address(terminal1_ip, 30)}:將地面站ip轉為網段,讓衛星知道要去哪
+                    else:#如果沒有via
+                        routing_dict[satellite].append(f"ip route add {xEO_network.get_network_address(terminal1_ip, 30)} dev{commandParts[1]}")#如果沒有via那指令就沒變
 
             for ip in sat2_ips:
                 net_ip = xEO_network.get_network_address(ip, 30)
