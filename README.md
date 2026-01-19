@@ -93,7 +93,14 @@ $$Latency = \frac{Distance \times 1000 (\text{米})}{3 \times 10^8 (\text{光速
 每一顆衛星為一個router，
 內部就是每一顆衛星的routing table指令
 
+<img width="814" height="539" alt="image" src="https://github.com/user-attachments/assets/09e5f8f8-3618-466c-a989-71f202d57e88" />
 
+```
+ip route add 192.168.26.84/30 via 192.168.1.10 dev STL-1054-eth0
+```
+| ip route add | 192.168.26.84/30 | 192.168.1.10 | STL-1054-eth0 |
+| :--- | :--- | :--- | :--- |
+| 增加一條新的路由規則 | 目的地網段 | 下一跳 IP(轉送站) | 軌道平面與地球赤道的夾角 |
 
 ### *Dilkstra演算法
 
