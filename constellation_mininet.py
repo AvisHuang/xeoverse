@@ -182,14 +182,18 @@ def delete_link_of_interface(net, host_name, interface_name, dummy_hostname):
                 debug_print(f"after delete - > Interface: {intf.name}, IP: {intf.IP()}", color='red')
     return net
 
-def create_link_between(intf1, intf2, ip1, ip2, net, satellites, timestamp):
+def create_link_between(intf1, intf2, ip1, ip2, net, satellites, timestamp): #net:mininet,satellite:星座物理資料庫
+
     dummy_h = net.get("dummy11")
+
+    #判斷
     for intf, ip in [(intf1, ip1), (intf2, ip2)]:
         parts = intf.split('-')
+        #判斷
         if len(parts) != 3:
             raise ValueError(f"Invalid interface format: {intf}")
         
-        host_name, interface = parts[0]+parts[1], parts[2]
+        host_name, interface = parts[0]+parts[1], parts[2] #把切割完的再合成 ('starlink''1234''eth0')
         x_host_name = naming_conversion_mininet_xeoverse(host_name)
         host = net.get(host_name)
 
@@ -391,7 +395,6 @@ def setup_mininet_topology(satellites, path, ip_assignments, routing_dict, confi
 
     #把ISL建起來
     for host_name in hosts:
-        
         debug_print(f"Satellite: {naming_conversion_mininet_xeoverse(host_name)}") #把名字轉到xeoverse板後在終端機印出來)
         linksPerSat = get_available_links_per_sat(naming_conversion_mininet_xeoverse(host_name), ip_assignments, satellites)#呼叫函式去資料庫中抓取這顆衛星所有的連線資訊(衛星名字,ip表,整個衛星的集合)
     #回傳本機網卡 ip 另外一節點的網卡 ip
