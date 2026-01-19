@@ -254,148 +254,6 @@ host_end1去使用command指令測量
 
 *Congestion control 是 TCP 用來根據網路狀況動態調整傳輸速率的機制，在 iperf 實驗中透過 -C 指定不同演算法，可以觀察在高延遲的 NTN 環境下對吞吐量的影響。
 
-
-
-
-## 五、Xeoverse做完模擬產生的OUTPUT
-
-Xeoverse 在模擬過程中，於 routing 計算相關流程中輸出多項中間與最終結果，包含 connectivity_matrices、routing_configs、constellation_ip_addresses 與 path.json 等檔案，作為後續 Mininet 網路模擬之輸入與設定依據
-
-
-### 1.1 connectivity_matrices  
-connectivity_matrices描述各時間點衛星之間是否存在可用連線，用以表示當下的網路拓樸狀態   ，並作為後續 routing 計算之基礎輸入資料
-<img width="960" height="777" alt="image" src="https://github.com/user-attachments/assets/6c09b286-eb2d-4939-8c83-e34ca1f4497a" />   
-Xeoverse 會於每一個模擬時間點輸出一份 adjacency matrix（鄰接矩陣），用以表示該時間點衛星節點之間的連線關係。以 adjacency_matrix_20231113_103000.json 為例，該檔案描述 2023/11/13 10:30:00 時刻之衛星連線狀態。
-
-
-### 1.2 routing_configs
-
-routing_configs 為 Xeoverse routing 計算後之最終輸出，用以將抽象路徑結果轉換為可實際套用之系統設定。  
-*每一秒皆有相對應的routing_configs產生  
-<img width="467" height="872" alt="image" src="https://github.com/user-attachments/assets/bc120602-b0ef-47d4-9065-c4bb8376aafd" />
-
-*以20231113_103000時刻的routing_configs做解釋
-<img width="956" height="191" alt="image" src="https://github.com/user-attachments/assets/4bc35384-244a-4be7-b51b-d736b208202d" />  
-在`20231113_103000`的結果中有許多顆衛星(e.g. STARLINK-1054…)，每一顆衛星節點，都有一份獨立的 routing 設定檔
-
-*`.sh` 檔格式是用以將 routing 計算結果轉換為可直接在系統中執行之腳本形式  
-*舉其中STARLINK-1054.sh的內容做解釋，會出現很多路由規則
-<img width="962" height="481" alt="image" src="https://github.com/user-attachments/assets/843aa072-9dcb-4522-b940-f67e6c7ff879" />  
-以ip route add 192.168.26.84/30 via 192.168.30.53 dev STL-1791-eth2做說明，封包的目的地是 192.168.26.84/30，STARLINK-1791會將應該把封包交給192.168.30.53下一跳，並從 STL-1791-eth2 這個介面送出去
-*下一跳表示「下一步先丟給誰」
-
-
-### 1.3 constellation_ip_addresses  
-constellation_ip_addresses是在記錄各時間點衛星節點所使用之 IP 位址與介面配置，作為抽象拓樸與實際網路模擬之對應。  
-<img width="962" height="293" alt="image" src="https://github.com/user-attachments/assets/a93e050d-5fb8-4130-b95c-5408ed6cf441" />
- 
-Xeoverse 於模擬過程中，依模擬時間點逐秒輸出各衛星節點之 IP 位址設定檔（constellation_ip_addresses），以反映低軌衛星網路之動態特性。  
-舉其中constellation_ip_addresses_20231113_103000.json，其內容為以下(因為太多並未全部列出)
-<img width="669" height="918" alt="image" src="https://github.com/user-attachments/assets/e329b278-d2a5-441a-94ef-604e36c1b867" />
-
-會出現很多衛星的連線，以`STARLINK-30816-eth2": "192.168.41.133"`做解釋
-`STARLINK-30816`表示衛星節點ID，eth2表示該衛星上的第 2 個網路介面，`192.168.41.133`表示此介面實際使用的 IP 位址
-然後最下面的London、SanFranci表示地面端點的網路介面 IP  
-
-
-### 1.4 path.json
-path.json 記錄於特定模擬時間點下，資料自來源端至目的端所經過之衛星節點序列；隨著衛星拓樸與可用連線之變化，不同時間點可能對應不同之路徑結果。  
-<img width="930" height="290" alt="image" src="https://github.com/user-attachments/assets/f555529d-c57d-4655-a9c7-1d73100092b2" />
-
-path 會隨模擬時間點變化，於不同時間點可能產生不同之路徑結果
-<img width="959" height="455" alt="image" src="https://github.com/user-attachments/assets/a15cb714-4303-41ab-9e98-1b4b9e33830b" />
-STARLINK-****表示是由這些衛星節點 ID 組成
-
-
-
-
-## GW-SAT建立link
-
-<img width="1172" height="441" alt="image" src="https://github.com/user-attachments/assets/058cda52-1c82-4b7f-9916-280553714da5" />
-
-### 呼叫setup_mininet_topology
-```
-setup_mininet_topology(
-    satellites=satellites,
-    path=path,
-    ip_assignments=ip_assignments,
-    routing_dict=routing_dict,
-    config_file=config_file
-)
-```
-
-### 讀取設定檔 config
-```
-ground_segments = {}
-config = read_config_(config_file)```
-```
-### 取得 Gateway 名稱 end1 / end2
-```
-end1 = config['experiment']['end1']
-end2 = config['experiment']['end2']
-```
-
-### 在 Mininet 建立 Gateway Host
-```
-host_end1 = net.addHost(end1.replace(" ", ""))
-host_end2 = net.addHost(end2.replace(" ", ""))
-#把原始名稱對到mininet host物件中
-ground_segments[end1] = host_end1
-ground_segments[end2] = host_end2
-```
-
-### 找出 end1 / end2 的 eth0 IP
-```
-terminal1_ip = xEO_network.find_the_ip_of_interface(
-#用end1-eth0去ip_assignment查出對應的ip
-    end1 + "-eth0",
-    ip_assignments
-)
-terminal2_ip = xEO_network.find_the_ip_of_interface(
-    end2 + "-eth0",
-    ip_assignments
-)
-```
-
-### 用 GW 的 IP 找到對應衛星介面
-```
-#sat_intf, sat_ip:衛星的介面名稱 IP
-sat_intf, sat_ip = xEO_network.find_matching_network_interface(
-#用 terminal1_ip去反查 ip_assignments，找出另一端衛星介面
-	terminal1_ip,
-    ip_assignments
-)
-```
-
-### 取出衛星端 IP
-```
-#從 ip_assignments 裡把 sat_intf 對應的 IP 拿出來
-value = ip_assignments.pop(sat_intf, None)
-```
-
-### 建立 end1 的 GW–SAT Link（GSL）
-```
-net.addLink(
-    host_end1,
-	#轉名字(xeoverse轉mininet)
-    hosts[naming_conversion_xeoverse_mininet(sat_intf.split("-eth")[0])],
-
-    intfName1=end1 + "-eth0",
-    intfName2=sat_intf.replace("STARLINK", "STL"),
-    cls=TCLink,
-#指定這條link使用TCLink類型
-    params1={'ip': terminal1_ip + '/30'},
-    params2={'ip': value + '/30'},
-    bw=130,
-    delay='5ms'
-)
-```
-
-
-
-
-
-
 ## 六、Xeoverse與sns3資料對比
 
 XEO 負責網路層（L3）的拓樸與路由，而 SNS3 負責實體層（L1）與 MAC 層（L2）的模擬
@@ -490,3 +348,58 @@ def extract_dynamic_routing():
 if __name__ == "__main__":
     extract_dynamic_routing()
 ```
+
+
+
+## 七、Xeoverse做完模擬產生的OUTPUT
+
+Xeoverse 在模擬過程中，於 routing 計算相關流程中輸出多項中間與最終結果，包含 connectivity_matrices、routing_configs、constellation_ip_addresses 與 path.json 等檔案，作為後續 Mininet 網路模擬之輸入與設定依據
+
+
+### 1.1 connectivity_matrices  
+connectivity_matrices描述各時間點衛星之間是否存在可用連線，用以表示當下的網路拓樸狀態   ，並作為後續 routing 計算之基礎輸入資料
+<img width="960" height="777" alt="image" src="https://github.com/user-attachments/assets/6c09b286-eb2d-4939-8c83-e34ca1f4497a" />   
+Xeoverse 會於每一個模擬時間點輸出一份 adjacency matrix（鄰接矩陣），用以表示該時間點衛星節點之間的連線關係。以 adjacency_matrix_20231113_103000.json 為例，該檔案描述 2023/11/13 10:30:00 時刻之衛星連線狀態。
+
+
+### 1.2 routing_configs
+
+routing_configs 為 Xeoverse routing 計算後之最終輸出，用以將抽象路徑結果轉換為可實際套用之系統設定。  
+*每一秒皆有相對應的routing_configs產生  
+<img width="467" height="872" alt="image" src="https://github.com/user-attachments/assets/bc120602-b0ef-47d4-9065-c4bb8376aafd" />
+
+*以20231113_103000時刻的routing_configs做解釋
+<img width="956" height="191" alt="image" src="https://github.com/user-attachments/assets/4bc35384-244a-4be7-b51b-d736b208202d" />  
+在`20231113_103000`的結果中有許多顆衛星(e.g. STARLINK-1054…)，每一顆衛星節點，都有一份獨立的 routing 設定檔
+
+*`.sh` 檔格式是用以將 routing 計算結果轉換為可直接在系統中執行之腳本形式  
+*舉其中STARLINK-1054.sh的內容做解釋，會出現很多路由規則
+<img width="962" height="481" alt="image" src="https://github.com/user-attachments/assets/843aa072-9dcb-4522-b940-f67e6c7ff879" />  
+以ip route add 192.168.26.84/30 via 192.168.30.53 dev STL-1791-eth2做說明，封包的目的地是 192.168.26.84/30，STARLINK-1791會將應該把封包交給192.168.30.53下一跳，並從 STL-1791-eth2 這個介面送出去
+*下一跳表示「下一步先丟給誰」
+
+
+### 1.3 constellation_ip_addresses  
+constellation_ip_addresses是在記錄各時間點衛星節點所使用之 IP 位址與介面配置，作為抽象拓樸與實際網路模擬之對應。  
+<img width="962" height="293" alt="image" src="https://github.com/user-attachments/assets/a93e050d-5fb8-4130-b95c-5408ed6cf441" />
+ 
+Xeoverse 於模擬過程中，依模擬時間點逐秒輸出各衛星節點之 IP 位址設定檔（constellation_ip_addresses），以反映低軌衛星網路之動態特性。  
+舉其中constellation_ip_addresses_20231113_103000.json，其內容為以下(因為太多並未全部列出)
+<img width="669" height="918" alt="image" src="https://github.com/user-attachments/assets/e329b278-d2a5-441a-94ef-604e36c1b867" />
+
+會出現很多衛星的連線，以`STARLINK-30816-eth2": "192.168.41.133"`做解釋
+`STARLINK-30816`表示衛星節點ID，eth2表示該衛星上的第 2 個網路介面，`192.168.41.133`表示此介面實際使用的 IP 位址
+然後最下面的London、SanFranci表示地面端點的網路介面 IP  
+
+
+### 1.4 path.json
+path.json 記錄於特定模擬時間點下，資料自來源端至目的端所經過之衛星節點序列；隨著衛星拓樸與可用連線之變化，不同時間點可能對應不同之路徑結果。  
+<img width="930" height="290" alt="image" src="https://github.com/user-attachments/assets/f555529d-c57d-4655-a9c7-1d73100092b2" />
+
+path 會隨模擬時間點變化，於不同時間點可能產生不同之路徑結果
+<img width="959" height="455" alt="image" src="https://github.com/user-attachments/assets/a15cb714-4303-41ab-9e98-1b4b9e33830b" />
+STARLINK-****表示是由這些衛星節點 ID 組成
+
+
+
+
