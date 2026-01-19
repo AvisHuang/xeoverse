@@ -321,11 +321,11 @@ def update_link_parameters(net, satellites, terminals, timestamp, config):
 
 def get_available_links_per_sat(sat_name, ip_assignments, satellites):
     links_per_sat = []
-    current_sat_ips = satellites[sat_name].neighbors_ip
+    current_sat_ips = satellites[sat_name].neighbors_ip  #先找到鄰居ip
 
     for ips in current_sat_ips:
-        neigh_intf, neigh_ip = xEO_network.find_matching_network_interface(ips, ip_assignments)
-        links_per_sat.append((xEO_network.find_interface_by_ip(ips, ip_assignments), ips, neigh_intf, neigh_ip))
+        neigh_intf, neigh_ip = xEO_network.find_matching_network_interface(ips, ip_assignments) #利用鄰居ip去ip_assignment找對方的介面
+        links_per_sat.append((xEO_network.find_interface_by_ip(ips, ip_assignments), ips, neigh_intf, neigh_ip)) #把本機網卡 本機ip 對向網卡 對向ip 存回link per sat
     
     return links_per_sat
 
@@ -360,15 +360,16 @@ def apply_routing_commands_in_mininet(net, routing_dict):
     return net
 
 def setup_mininet_topology(satellites, path, ip_assignments, routing_dict, config_file):
-    net = Mininet(controller=None, switch=OVSSwitch, link=TCLink)
+    net = Mininet(controller=None, switch=OVSSwitch, link=TCLink)  #初始化 Mininet 物件，設定link使用TCLink
     net.start()
     # Dictionary to hold the Mininet hosts
-    hosts = {}
-    new_hosts = {}
+    hosts = {}   ##原本的衛星
+    new_hosts = {}  ##鄰居衛星 
     
-    dummy_host = net.addHost(f'dummy11')
+    dummy_host = net.addHost(f'dummy11') ##建立虛擬主機 用來暫時連接那些還沒找到對向節點的孤立網卡
     debug_print(path, color='red')
     # Create Mininet hosts for each satellite in the path
+    ##用已知的path.json檔內的路徑衛星在mininet裡建起來後存到host{}
     for sat_name in path:
         current_sat_ips = satellites[sat_name].neighbors_ip
         sat_name_ = naming_conversion_xeoverse_mininet(sat_name)
@@ -376,26 +377,28 @@ def setup_mininet_topology(satellites, path, ip_assignments, routing_dict, confi
         hosts[sat_name_] = host
     
     # Create Mininet hosts for the neighbours of the satellites in the path
-    for host_name in hosts:
-        neighbours = get_neighbour_satellites(naming_conversion_mininet_xeoverse(host_name), satellites)
+    for host_name in hosts:  
+        neighbours = get_neighbour_satellites(naming_conversion_mininet_xeoverse(host_name), satellites)#這邊會呼叫topology函式中的get_neighbour_satellites
         for x_sats in neighbours:
             sat_name_ = naming_conversion_xeoverse_mininet(x_sats)
             if sat_name_ not in hosts and sat_name_ not in new_hosts:  # Check if the host is not already in the dictionaries
                 host = net.addHost(sat_name_)
-                new_hosts[sat_name_] = host
+                new_hosts[sat_name_] = host  ##會被存進新主機中與核心路徑衛星區分開
     
-    hosts.update(new_hosts)
+    hosts.update(new_hosts)  ##new host整合進host裡
 
     # debug_print(hosts)
-    
-    for host_name in hosts:
-        debug_print(f"Satellite: {naming_conversion_mininet_xeoverse(host_name)}")
-        linksPerSat = get_available_links_per_sat(naming_conversion_mininet_xeoverse(host_name), ip_assignments, satellites)
 
-        for tuples in linksPerSat:
-            if naming_conversion_xeoverse_mininet(tuples[0].split("-eth")[0]) in hosts and naming_conversion_xeoverse_mininet(tuples[2].split("-eth")[0]) in hosts:
-                debug_print(f"Neighbours details: \n \t >> Link-end-1:{tuples[0]} \n \t >> Link-end-2:{tuples[2]} \n \t >> IP 1: {tuples[1]} \n \t >> IP 2: {tuples[3]}")
-                create_link_between(tuples[0], tuples[2], tuples[1], tuples[3], net, satellites, timestamp = datetime(2023, 11, 13, 10, 30, 0))
+    #把ISL建起來
+    for host_name in hosts:
+        
+        debug_print(f"Satellite: {naming_conversion_mininet_xeoverse(host_name)}") #把名字轉到xeoverse板後在終端機印出來)
+        linksPerSat = get_available_links_per_sat(naming_conversion_mininet_xeoverse(host_name), ip_assignments, satellites)#呼叫函式去資料庫中抓取這顆衛星所有的連線資訊(衛星名字,ip表,整個衛星的集合)
+    #回傳本機網卡 ip 另外一節點的網卡 ip
+        for tuples in linksPerSat:#從回傳可用的連線去找
+            if naming_conversion_xeoverse_mininet(tuples[0].split("-eth")[0]) in hosts and naming_conversion_xeoverse_mininet(tuples[2].split("-eth")[0]) in hosts: #先把網卡名字切割 檢查發起端衛星與接收端衛星是否都已經被建立在 hosts 字典裡了。
+                debug_print(f"Neighbours details: \n \t >> Link-end-1:{tuples[0]} \n \t >> Link-end-2:{tuples[2]} \n \t >> IP 1: {tuples[1]} \n \t >> IP 2: {tuples[3]}") #檢查通過印出連線資訊
+                create_link_between(tuples[0], tuples[2], tuples[1], tuples[3], net, satellites, timestamp = datetime(2023, 11, 13, 10, 30, 0)) #開始拉線
             else:
                 if naming_conversion_xeoverse_mininet(tuples[0].split("-eth")[0]) not in hosts:
                     debug_print(f"{naming_conversion_xeoverse_mininet(tuples[0].split('-eth')[0])} is not in the path and not directly related to the path .. ignore it", color='red')
