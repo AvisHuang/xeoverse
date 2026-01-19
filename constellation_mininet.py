@@ -196,15 +196,15 @@ def create_link_between(intf1, intf2, ip1, ip2, net, satellites, timestamp): #ne
         host = net.get(host_name) # 透過名稱從 Mininet網路物件中抓取已建立的主機實體
         
         # Ensure previous interfaces exist 用for去檢查前面的介面是否存在(eth0)
-        for prev_intf_num in range(int(interface.replace('eth', ''))):
-            prev_intf_name = f"{x_host_name}-eth{prev_intf_num}".replace("STARLINK", "STL")
-            interfaces = host.intfList()
-            if not any(prev_intf_name == intf.name for intf in interfaces):
+        for prev_intf_num in range(int(interface.replace('eth', ''))): #把eth去掉(e.g.eth2=>2))
+            prev_intf_name = f"{x_host_name}-eth{prev_intf_num}".replace("STARLINK", "STL")#(STL-1234-eth0)
+            interfaces = host.intfList)#把現在host所有的介面list出來
+            if not any(prev_intf_name == intf.name for intf in interfaces):#用for迴圈去遍歷interfaces裡找是否有沒有存在相同名字的介面,沒有才會在下一行做補齊
                 net.addLink(host, dummy_h, intfName1=prev_intf_name, cls=TCLink, params1={'ip': generate_random_ip() + '/30'}, params2={'ip': generate_random_ip() + '/30'}, bw=10, delay='5ms')  # Example bandwidth and delay
                 #host, dummy_h:把衛星主機先接到dummy
                 #intfName1=prev_intf_name:強制將衛星端的網卡命名為我們剛才組裝好的名字
                 #連線指定:用 TCLink
-                # params1={'ip': generate_random_ip() + '/30'}, params2={'ip': generate_random_ip() + '/30'},為這條連線的兩端隨機產生一個/30的IP。他是假連線但必須有IP才能讓網卡狀態顯示為已啟用
+                # params1={'ip': generate_random_ip() + '/30'}, params2={'ip': generate_random_ip() + '/30'},為這條連線的兩端隨機產生一個/30的IP。他是假連線但必須有IP才能讓網卡狀態顯示為已啟用,/30:IP後面加上子網路遮罩
                 debug_print(f"{prev_intf_name} interface is added with IP= {host.IP(prev_intf_name)}", color='yellow')
 
 
@@ -213,13 +213,13 @@ def create_link_between(intf1, intf2, ip1, ip2, net, satellites, timestamp): #ne
     host1 = net.get(host1_name)#呼叫net拿到已經建好的host1,使HOST1變為實體主機
     host2 = net.get(host2_name)
 
-    if len(host1.intfList()) > 0 and any(intf1_name == intf.name for intf in host1.intfList()):#檢查host1身上是否已經有任何網卡,先回傳host1物件到intf,再去判斷intf的內容是否和intf1_name一樣;如果有的話代表intf還接在dummy上 要刪除
+    if len(host1.intfList()) > 0 and any(intf1_name == intf.name for intf in host1.intfList()):#檢查host1身上是否已經有任何網卡,先回傳host1物件到intf,再去判斷intf(原有的)的內容是否和intf1_name(想要使用的網卡)一樣;如果有的話代表intf還接在dummy上 要刪除
         delete_link_of_interface(net, host1_name, intf1_name, "dummy11")#呼叫刪除連線(主機插在dummy上的連線)
     
     if len(host2.intfList()) > 0 and  any(intf2_name == intf.name for intf in host2.intfList()):
         delete_link_of_interface(net, host2_name, intf2_name, "dummy11")
     
-    if check_link_exists(net, host1_name, host2_name, intf1_name, intf2_name) == False:
+    if check_link_exists(net, host1_name, host2_name, intf1_name, intf2_name) == False:#回傳false表示link還未存在
         sat1 = satellites[naming_conversion_mininet_xeoverse(host1_name)]
         sat2 = satellites[naming_conversion_mininet_xeoverse(host2_name)]
         link_latency = x_topo.calculate_satellites_latency_(sat1, sat2, timestamp)#計算link延遲
