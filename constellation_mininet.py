@@ -368,7 +368,7 @@ def apply_routing_commands_in_mininet(net, routing_dict):
     return net
 
 def setup_mininet_topology(satellites, path, ip_assignments, routing_dict, config_file):
-    net = Mininet(controller=None, switch=OVSSwitch, link=TCLink)  #初始化 Mininet 物件，設定link使用TCLink
+    net = Mininet(controller=None, switch=OVSSwitch, link=TCLink)  #初始化Mininet物件，代表不使用外部的SDN控制器，用OpenvSwitch作為衛星內部的交換機,設定link使用TCLink
     net.start()
     # Dictionary to hold the Mininet hosts
     hosts = {}   ##原本的衛星
