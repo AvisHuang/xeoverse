@@ -213,7 +213,7 @@ def create_link_between(intf1, intf2, ip1, ip2, net, satellites, timestamp): #ne
     host1 = net.get(host1_name)#呼叫net拿到已經建好的host1,使HOST1變為實體主機
     host2 = net.get(host2_name)
 
-    if len(host1.intfList()) > 0 and any(intf1_name == intf.name for intf in host1.intfList()):#檢查host1身上是否已經有任何網卡,先回傳host1物件到intf,再去判斷intf(原有的)的內容是否和intf1_name(想要使用的網卡)一樣;如果有的話代表intf還接在dummy上 要刪除
+    if len(host1.intfList()) > 0 and any(intf1_name == intf.name for intf in host1.intfList()):#檢查host1身上是否已經有任何網卡及檢查自己要建的網卡有沒有存在整個網卡列表裡
         delete_link_of_interface(net, host1_name, intf1_name, "dummy11")#呼叫刪除連線(主機插在dummy上的連線)
     
     if len(host2.intfList()) > 0 and  any(intf2_name == intf.name for intf in host2.intfList()):
