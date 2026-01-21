@@ -78,7 +78,7 @@ Constellation link characteristics會藉由輸入connectivity matrix到[Constell
 $$Latency = \frac{Distance \times 1000 (\text{米})}{3 \times 10^8 (\text{光速})} \times 1000 (\text{轉毫秒})$$
 ### 3.2 capacity matrix
 在某一個時間點，每一對節點之間最多能傳多少資料，它有分成GSL和ISL
-,ISL的頻寬是直接在[topology](https://github.com/AvisHuang/xeoverse/blob/0afcaa267fe8c5519e934b5a4afe68ce87102efc/constellation_topology.py#L367)定義的,GSL則是動態計算，是引用衛星位置與地面站位置，計算出訊號強度，再利用香農定理計算出該時刻的最大容量。
+,ISL的頻寬是直接在[topology](https://github.com/AvisHuang/xeoverse/blob/0afcaa267fe8c5519e934b5a4afe68ce87102efc/constellation_topology.py#L367)定義的,GSL則是[動態計算](https://github.com/AvisHuang/xeoverse/blob/054922ff1d04dc8d85613812f0691b38e8cf7ab2/constellation_topology.py#L447)。
 
 ## 四、Constellation Routing(IV.D)
 
