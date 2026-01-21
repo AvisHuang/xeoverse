@@ -6,12 +6,12 @@ simulation: ##模擬時間部分
 
 parameters: ##拓樸連線參數
   isl_links: 3  ##限制每顆衛星ISL最多3條
-  topology_structure: 'cross-orbit'  ##定義連線為cross orbit 然後會去呼叫CrossOrbitTopology 然後去找cross orbit的左右鄰居
+  topology_structure: 'cross-orbit'  ##定義一個cross orbit類別
   isl_max_distance_km: 5000  ##限制連線不能超過5000KM
   inclination_tolerance: 0.06 ##軌道傾角的誤差
-  target_inclination: 53.0 ##目標軌道傾角
+  target_inclination: 53.0 ##目標軌道傾角(高度)
   raan_tolerance: 1.0  ##目標軌道間的誤差
-  raan_step: 5.0 ##定義了軌道面之間剛好5度才算隔壁軌道
+  raan_step: 5.0 ##定義了軌道面之間剛好5度才算跨軌道
 
 rf-parameters:  ##鏈路特性參數(GSL)
   ##定義下行上行鏈路(GSL)的BW和frequency
@@ -30,7 +30,7 @@ rf-parameters:  ##鏈路特性參數(GSL)
     tx_power: 36.08526    #dBm -- https://apps.fcc.gov/els/GetAtt.html?id=259301  ##終端設備發射機的輸出功率
     tx_gain:  34.6        #dBi -- https://apps.fcc.gov/els/GetAtt.html?id=259301  ##發射時的方向性增益(發射信號會像光束一聚焦)
     rx_gain:  33.2        #dBi -- https://apps.fcc.gov/els/GetAtt.html?id=259301  ##在接收時的方向性增益(較高的 rx_gain 能幫助設備在雜訊中過濾出有用的數據封包)
-    merit_figure: 9.2     #dB/K  ##決定增益會被雜訊受到德高擾比例
+    merit_figure: 9.2     #dB/K  ##決定增益會被雜訊受到的干擾比例(G/T)
   satellite:
     tx_power_eirp: 66.89  #dbW -- ##等向有效輻射功率
     tx_gain:
