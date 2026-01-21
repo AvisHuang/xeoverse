@@ -186,7 +186,8 @@ Xeoverse在[main.py](https://github.com/AvisHuang/xeoverse/blob/fa7c535475d880b3
 xEO_mininet.setup_mininet_topology(new_satellites, path, ip_assignment, routing_r)
 ```
 new_satellites:每顆衛星的名稱、索引、TLE、在太空中的3D座標
-path:告訴Mininet封包要走哪條路  
+
+path:地面站到另一地面站的路徑
 ip_assignment:告訴Mininet每個介面的 IP  
 routing_r:Mininet要下哪些指令  
 
