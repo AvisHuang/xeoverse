@@ -4,10 +4,6 @@
 <img width="897" height="224" alt="image" src="https://github.com/user-attachments/assets/b9b80bc9-da6e-4919-8096-4c40ef2de90e" />
 
 
-##  short-term target
-- [ ] 完成輸出routing Table的csv檔(done)
-- [ ] 完成上次報告的修正(done)
-- [ ] 整理 xeoverse 筆記(done)
 
 
 
